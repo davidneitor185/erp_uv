@@ -1,0 +1,28 @@
+
+.login-content{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:100vw;
+  height: 100vh;
+  background-image: url(./imagenes/background.png);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover ;
+  min-height: 657px;
+  min-width: 954px;
+};
+
+.logo_uni{
+  width: 80px;
+  height: 80px;
+}
+
+.logo{
+  width: 80px;
+  height: 80px;
+  margin-left: 100px;
+}
+
+
+
