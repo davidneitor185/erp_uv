@@ -5,20 +5,30 @@ import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 //import Paginas from "../componentes/Paginas";
 import BadgeInfe from "../componentes/BadgeInfe";
 import { useNavigate } from "react-router-dom";
+import useAxios from "../../useAxios";
 
 const Solicitudes = () => {
   const titulos = [
     "Id. Solicitud",
     "Solicitante",
-    "Items solicitados",
+    "Numero Items",
     "Tiempo esperado",
     "Estado",
     "Opciones",
   ];
+  const datos = [["1", "marbelle","5","05/02/2022","radicado"],[]];
+  const solicitudes = useAxios("/solicitudes");
+  const data = () =>{
+    solicitudes.map((soli)=>{
+      console.log(soli);
+    })
+  }
+
   const history = useNavigate();
 
   const crearSoli = () =>{
     history("/principal/crearsolicitud");
+    console.log(solicitudes);
   }
 
   return (
@@ -47,7 +57,7 @@ const Solicitudes = () => {
         </Form>
       </div>
       <div style={{ justifyContent: "center", margin: "0 250px" }}>
-        <TablaSI titulos={titulos} />
+        <TablaSI titulos={titulos} datos={datos}/>
       </div>
       <BadgeInfe />
     </div>

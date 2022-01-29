@@ -3,6 +3,7 @@ import Login from "./Login/Login";
 import UserState from "../User/UserState";
 import Solicitudes from "./solicitudes/Solicitudes";
 import CrearSoli from "./solicitudes/CrearSoli";
+import VerSoli from "./solicitudes/VerSoli";
 
 function Rutas() {
   return (
@@ -13,6 +14,7 @@ function Rutas() {
             <Route exact path="/" element={<Login />} />
             <Route exact path="/principal" element={<Solicitudes />}/>
             <Route exact path="/principal/crearsolicitud" element={<CrearSoli />}/>
+            <Route exact path="/principal/versolicitud" element={<VerSoli data= "1"/>}/>
 
           </Routes>
         </Router>

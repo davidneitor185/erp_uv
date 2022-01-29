@@ -1,13 +1,13 @@
 import React from "react";
-import Navbar from "./componentes/Navbar";
-import { TablaSI } from "./componentes/TablaSI";
+import Navbar from "../componentes/Navbar";
+import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col, Dropdown } from "react-bootstrap";
-import Paginas from "./componentes/Paginas";
-import BadgeInfe from "./componentes/BadgeInfe";
-import { Form } from "react-bootstrap";
+import Paginas from "../componentes/Paginas";
+import BadgeInfe from "../componentes/BadgeInfe";
 
 
-const VerSoli = () => {
+
+const VerSoli = (data) => {
   const titulos = ["No.", "Item", "Cantidad"];
   return (
     <div>
