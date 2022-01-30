@@ -1,11 +1,10 @@
 import React from "react";
-import Navbar from "../componentes/Navbar";
 import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 //import Paginas from "../componentes/Paginas";
 import BadgeInfe from "../componentes/BadgeInfe";
-import { useNavigate } from "react-router-dom";
 import useAxios from "../../useAxios";
+import { Link } from "react-router-dom";
 
 const Solicitudes = () => {
   const titulos = [
@@ -24,16 +23,10 @@ const Solicitudes = () => {
     })
   }
 
-  const history = useNavigate();
-
-  const crearSoli = () =>{
-    history("/principal/crearsolicitud");
-    console.log(solicitudes);
-  }
 
   return (
     <div>
-      <Navbar />
+      
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
         <h3>Solicitudes Internas</h3>
       </div>
@@ -51,7 +44,7 @@ const Solicitudes = () => {
               <Button variant="secondary">🔍</Button>
             </Col>
             <Col sm="1">
-              <Button variant="secondary" onClick={() => crearSoli()}>➕</Button>
+              <Link className="btn btn-secondary" to={"/principal/crearsolicitud"}>➕</Link>
             </Col>
           </Form.Group>
         </Form>

@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../componentes/Navbar";
 import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 import BadgeInfe from "../componentes/BadgeInfe";
@@ -40,7 +39,7 @@ const CrearSoli = () => {
   };
   return (
     <div>
-      <Navbar />
+      
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
         <h3>Crear Solicitudes Internas</h3>
       </div>

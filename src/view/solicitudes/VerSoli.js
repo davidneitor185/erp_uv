@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "../componentes/Navbar";
 import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col, Dropdown } from "react-bootstrap";
 import Paginas from "../componentes/Paginas";
@@ -7,11 +6,11 @@ import BadgeInfe from "../componentes/BadgeInfe";
 
 
 
-const VerSoli = (data) => {
+const VerSoli = () => {
   const titulos = ["No.", "Item", "Cantidad"];
   return (
     <div>
-      <Navbar />
+      
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
         <h3>Ver Solicitud Interna</h3>
       </div>

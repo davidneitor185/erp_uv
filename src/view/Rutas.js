@@ -4,17 +4,21 @@ import UserState from "../User/UserState";
 import Solicitudes from "./solicitudes/Solicitudes";
 import CrearSoli from "./solicitudes/CrearSoli";
 import VerSoli from "./solicitudes/VerSoli";
+import Navbar from './componentes/Navbar';
+;
+
 
 function Rutas() {
   return (
     <div className="App">
       <UserState>
+        <Navbar/>
         <Router>
           <Routes>
             <Route exact path="/" element={<Login />} />
-            <Route exact path="/principal" element={<Solicitudes />}/>
-            <Route exact path="/principal/crearsolicitud" element={<CrearSoli />}/>
-            <Route exact path="/principal/versolicitud" element={<VerSoli data= "1"/>}/>
+            <Route path="/principal" element={<Solicitudes />}/>
+            <Route path="/principal/crearsolicitud" element={<CrearSoli />}/>
+            <Route path="/principal/versolicitud" element={<VerSoli/>}/>
 
           </Routes>
         </Router>

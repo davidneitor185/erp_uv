@@ -3,6 +3,7 @@ import React from "react";
 import { Button, Table } from "react-bootstrap";
 import Paginas from "./Paginas";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const TablaSI = (props) => {
 
