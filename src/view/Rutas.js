@@ -3,7 +3,6 @@ import Login from "./Login/Login";
 import UserState from "../User/UserState";
 import Solicitudes from "./solicitudes/Solicitudes";
 import CrearSoli from "./solicitudes/CrearSoli";
-import VerSoli from "./solicitudes/VerSoli";
 import Navbar from './componentes/Navbar';
 ;
 
@@ -18,7 +17,7 @@ function Rutas() {
             <Route exact path="/" element={<Login />} />
             <Route path="/principal" element={<Solicitudes />}/>
             <Route path="/principal/crearsolicitud" element={<CrearSoli />}/>
-            <Route path="/principal/versolicitud" element={<VerSoli/>}/>
+            
 
           </Routes>
         </Router>

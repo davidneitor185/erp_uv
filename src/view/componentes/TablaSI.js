@@ -4,6 +4,7 @@ import { Button, Table } from "react-bootstrap";
 import Paginas from "./Paginas";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import ModalVerSoli from "../solicitudes/modalVerSolicitud";
 
 export const TablaSI = (props) => {
 
@@ -37,7 +38,7 @@ export const TablaSI = (props) => {
                   {dato.map((datico) => {
                     return <td>{datico}</td>;
                   })}
-                  <td><Button onClick={()=>verSoli(dato)}>holi</Button></td>
+                  <td><ModalVerSoli/></td>
                 </tr>
               );
             })}
