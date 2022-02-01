@@ -4,7 +4,8 @@ import UserState from "../User/UserState";
 import Solicitudes from "./solicitudes/Solicitudes";
 import CrearSoli from "./solicitudes/CrearSoli";
 import Navbar from './componentes/Navbar';
-;
+import CuentasPorPagar from "./cuentas_por_pagar/CuentasPorPagar";
+
 
 
 function Rutas() {
@@ -17,7 +18,7 @@ function Rutas() {
             <Route exact path="/" element={<Login />} />
             <Route path="/principal" element={<Solicitudes />}/>
             <Route path="/principal/crearsolicitud" element={<CrearSoli />}/>
-            
+            <Route path="/cuentasporpagar" element={<CuentasPorPagar />}/>
 
           </Routes>
         </Router>

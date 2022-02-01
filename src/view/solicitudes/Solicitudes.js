@@ -16,6 +16,7 @@ const Solicitudes = () => {
     "Opciones",
   ];
   const datos = [["1", "marbelle","5","05/02/2022","radicado"],[]];
+  const tipo = "solicitudes";
   const solicitudes = useAxios("/solicitudes");
   const data = () =>{
     solicitudes.map((soli)=>{
@@ -50,7 +51,7 @@ const Solicitudes = () => {
         </Form>
       </div>
       <div style={{ justifyContent: "center", margin: "0 250px" }}>
-        <TablaSI titulos={titulos} datos={datos}/>
+        <TablaSI titulos={titulos} datos={datos} tipo={tipo}/>
       </div>
       <BadgeInfe />
     </div>

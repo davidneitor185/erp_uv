@@ -5,6 +5,9 @@ import Paginas from "./Paginas";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ModalVerSoli from "../solicitudes/modalVerSolicitud";
+import VerDetalleCuentas from "../cuentas_por_pagar/VerDetalleCuentas";
+import PagarCuenta from "../cuentas_por_pagar/PagarCuenta";
+import AnularCuentas from "../cuentas_por_pagar/AnularCuentas";
 
 export const TablaSI = (props) => {
 
@@ -32,15 +35,31 @@ export const TablaSI = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.datos && props.datos.map((dato) => {
-              return (
-                <tr>
-                  {dato.map((datico) => {
-                    return <td>{datico}</td>;
-                  })}
-                  <td><ModalVerSoli/></td>
-                </tr>
-              );
+            {props.tipo && props.datos && props.datos.map((dato) => {
+              if(props.tipo =="solicitud"){
+                return (
+                  <tr>
+                    {dato.map((datico) => {
+                      return <td>{datico}</td>;
+                    })}
+                    <td><ModalVerSoli/></td>
+                  </tr>
+                );
+              }else if(props.tipo == "cuentasxpagar"){
+                return (
+                  <tr>
+                    {dato.map((datico) => {
+                      return <td>{datico}</td>;
+                    })}
+                    <td>
+                      <AnularCuentas />
+                      <VerDetalleCuentas />
+                      <PagarCuenta />
+                      </td>
+                  </tr>
+                );
+              }
+              
             })}
           </tbody>
         </Table>
