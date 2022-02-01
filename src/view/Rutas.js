@@ -11,13 +11,11 @@ function Rutas() {
   return (
     <div className="App">
       <UserState>
-        <Navbar/>
         <Router>
           <Routes>
             <Route exact path="/" element={<Login />} />
             <Route path="/principal" element={<Solicitudes />}/>
-            <Route path="/principal/crearsolicitud" element={<CrearSoli />}/>
-            
+            <Route path="/principal/crearsolicitud" element={<CrearSoli />}/>        
 
           </Routes>
         </Router>

@@ -18,7 +18,7 @@ const ModalVerSoli = () => {
       </Button>
 
       <Modal show={show} onHide={handleClose}
-      fullscreen={true}>
+        fullscreen={true}>
         <Modal.Header closeButton>
           <Modal.Title>Ver Solicitud Interna</Modal.Title>
         </Modal.Header>
@@ -42,18 +42,16 @@ const ModalVerSoli = () => {
                 aria-describedby="basic-addon1"
               /> */}
                   </Col>
-                  <Col sm="2" className="button">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Estado solicitud
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Aprobada Jefe I.</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Blah 1</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Blah 2</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                  <Col sm="2" >
+                  <Form.Label>Estado</Form.Label>
+                    <Form.Select >
+                      <option>Diligenciada</option>
+                      <option>Aprobada Jefe I.</option>
+                      <option>Rechazada Jefe I.</option>
+                      <option>Aprobada Gerente Gral.</option>
+                      <option>Rechazada Gerente Gral.</option>
+                    </Form.Select>
+                    
                   </Col>
                   <Col sm="1" className="button">
                     <Button variant="secondary">Regresar</Button>

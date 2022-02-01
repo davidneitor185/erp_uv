@@ -6,12 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ModalVerSoli from "../solicitudes/modalVerSolicitud";
 
-export const TablaSI = (props) => {
+export const TablaSI = ({titulos, datos}) => {
 
-  const history = useNavigate();
-  const verSoli = (data) =>{
-    history(`/principal/versolicitud/${data}`);
-  }
   return (
     <div
       style={{
@@ -22,23 +18,23 @@ export const TablaSI = (props) => {
       }}
     >
       <div style={{borderRadius:4}}>
-        {props.children && <props.children/>}
+        
         <Table striped bordered hover>
           <thead>
             <tr>
-              {props.titulos.map((titulo) => {
-                return <th>{titulo}</th>;
+              { titulos.map((titulo, index) => {
+                return <th key={index}>{titulo}</th>;
               })}
             </tr>
           </thead>
           <tbody>
-            {props.datos && props.datos.map((dato) => {
+            {datos && datos.map((dato, index) => {
               return (
-                <tr>
-                  {dato.map((datico) => {
-                    return <td>{datico}</td>;
+                <tr key={index}>
+                  {dato.map((datico, i) => {
+                    return <td key={i}>{datico}</td>;
                   })}
-                  <td><ModalVerSoli/></td>
+                  <td><ModalVerSoli /></td>
                 </tr>
               );
             })}

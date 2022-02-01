@@ -1,4 +1,4 @@
-import {useContext} from "react";
+import { useContext } from "react";
 import Alert from 'react-bootstrap/Alert'
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -24,10 +24,10 @@ const Login = () => {
     const [datos, setDatos] = useState({
         email: "",
         contrasena: ""
-      });
-    const {dispatch} = useContext(UserContext);
+    });
+    const { dispatch } = useContext(UserContext);
 
-    
+
 
     // Función de escucha que obtiene el valor de los campos de texto
     const handleInputChange = (event) => {
@@ -38,36 +38,36 @@ const Login = () => {
     };
 
     //funciones
-    const  logearse = async ()  => {
+    const logearse = async () => {
 
-       const ususario = await getUsuario();      
-       if(ususario[0] != []){
-           notify("logeado");
-           dispatch({type:'LOGIN',payload: ususario[0]});
+        const ususario = await getUsuario();
+        if (ususario[0] != []) {
+            notify("logeado");
+            dispatch({ type: 'LOGIN', payload: ususario[0] });
             history("/principal");
-            
-       }
-        
+
+        }
+
     }
 
-   const getUsuario = async (body) => {
+    const getUsuario = async (body) => {
         try {
-          const response = await axios.get(url+'cuenta/'+ datos.email + '/'+datos.contrasena); 
-          //setUser(response.data);
-          return response.data;     
+            const response = await axios.get(url + 'cuenta/' + datos.email + '/' + datos.contrasena);
+            //setUser(response.data);
+            return response.data;
         } catch (error) {
         }
-      };
+    };
 
 
 
-    return (        
+    return (
         <div className="login-content ">
             <ToastContainer />
             <div className="ingenieria">
                 <img src={ingenieria} className="imagen" alt="imagen Ingenieria" />
             </div>
-            
+
             <Form className="formulario rounded p-4 p-sm-3">
                 <div className="logo_uni">
                     <img src={Univalle} className="logo" alt="logo univalle" />
@@ -81,23 +81,21 @@ const Login = () => {
                     <Form.Label>Contraseña</Form.Label>
                     <Form.Control type="password" placeholder="**********" name="contrasena" onChange={handleInputChange} />
                 </Form.Group>
-                  <div className="row align-items-center">
-                                    <div className="col">
-                                    <Form.Check type="checkbox" label="Recuérdame" />
-                                    </div>
-                                    <div className="col">
-                                    <Alert.Link href="#">Olvidó su contraseña</Alert.Link>
-                                    </div>
-                                </div> 
-                
-            </Form>
-            <div>
-            <Button className="btn_iniciar" variant="primary" type="button" onClick={()=>logearse()}>
+                <div className="row align-items-center">
+                    <div className="col">
+                        <Form.Check type="checkbox" label="Recuérdame" />
+                    </div>
+                    <div className="col">
+                        <Alert.Link href="#">Olvidó su contraseña</Alert.Link>
+                    </div>
+                </div>
+                <Button className="btn_iniciar" variant="primary" type="button" onClick={() => logearse()}>
                     Ingresar
                 </Button>
-            </div> 
+            </Form>
+           
         </div>
-        
+
     );
 };
 export default Login; 
