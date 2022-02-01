@@ -1,7 +1,7 @@
 import React from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
-import BadgeInfe from "../componentes/BadgeInfe";
+import BadgeInfe from "../componentes/badgeinfe_compras/BadgeInfe";
 import crearSoli from "./crearSoli.css";
 import Navbar from "../componentes/Navbar";
 const CrearSoli = () => {

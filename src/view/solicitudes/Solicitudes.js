@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 //import Paginas from "../componentes/Paginas";
-import BadgeInfe from "../componentes/BadgeInfe";
+import BadgeInfe from "../componentes/badgeinfe_compras/BadgeInfe";
 import useAxios from "../../useAxios";
 import { Link } from "react-router-dom";
 import Navbar from "../componentes/Navbar";

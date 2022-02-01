@@ -4,6 +4,7 @@ import UserState from "../User/UserState";
 import Solicitudes from "./solicitudes/Solicitudes";
 import CrearSoli from "./solicitudes/CrearSoli";
 import Navbar from './componentes/Navbar';
+import Ordenes_compra from './ordenes_compra/ordenes_compra';
 ;
 
 
@@ -15,7 +16,8 @@ function Rutas() {
           <Routes>
             <Route exact path="/" element={<Login />} />
             <Route path="/principal" element={<Solicitudes />}/>
-            <Route path="/principal/crearsolicitud" element={<CrearSoli />}/>        
+            <Route path="/principal/crearsolicitud" element={<CrearSoli />}/>
+            <Route path="/principal/ordenes_compra" element={<Ordenes_compra />}/>         
 
           </Routes>
         </Router>
