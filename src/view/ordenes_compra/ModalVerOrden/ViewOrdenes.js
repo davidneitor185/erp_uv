@@ -17,7 +17,7 @@ const ViewOrdenes = (props) => {
   return (
     <>
       <Button variant="secondary" onClick={handleShow}>
-        🔍
+        🔍 buscar
       </Button>
       
       <Modal show={show} onHide={handleClose} fullscreen={true}>
