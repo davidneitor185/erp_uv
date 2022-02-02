@@ -57,12 +57,12 @@ const Solicitudes = () => {
           <Form.Group as={Row} style={{ justifyContent: "center" }}>
             <Col sm="3">
               <FormControl
-                placeholder="🔍   Search..."
+                placeholder="   Search..."
                 aria-label="Username"
                 aria-describedby="basic-addon1"
               />
             </Col>
-            <Col sm="1" style={{ width: "4%" }}>
+            <Col sm="1" style={{ width: "4%", display: "flex"}}>
               <Button variant="secondary">🔍</Button>
             </Col>
             <Col sm="1">
