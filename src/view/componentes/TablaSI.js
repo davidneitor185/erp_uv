@@ -5,6 +5,7 @@ import Paginas from "./Paginas";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ModalVerSoli from "../solicitudes/modalVerSolicitud";
+import './Table/TablaSI.css';
 
 export const TablaSI = ({titulos, datos}) => {
 
@@ -34,7 +35,7 @@ export const TablaSI = ({titulos, datos}) => {
                   {dato.map((datico, i) => {
                     return <td key={i}>{datico}</td>;
                   })}
-                  <td><ModalVerSoli /></td>
+                  <td className="tb"><ModalVerSoli data_solicitud={dato[0]}/></td>
                 </tr>
               );
             })}

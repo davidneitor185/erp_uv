@@ -1,30 +1,42 @@
 import { useState } from "react";
 import React from "react";
 import { TablaSI } from "../componentes/TablaSI";
+import { TablaCOC } from "../componentes/TablaCOC";
 import { FormControl, Button, Form, Row, Col, Dropdown, Modal } from "react-bootstrap";
 import crearSoli from "./crearSoli.css";
+import {BiSearchAlt2, BiFolderPlus} from "react-icons/bi";
 
-const ModalVerSoli = () => {
-  const [show, setShow] = useState(false);
-  const titulos = ["No.", "Item", "Cantidad"];
+const ModalVerSoli = ({data_solicitud}) => {
+  const [showPanel1, setShowPanel1] = useState(false);
+  const [showPanel2, setShowPanel2] = useState(false);
+  const titulos1 = ["No.", "Item", "Cantidad"];
+  const titulos2 = ["Id Orden", "Jefe Compra", "Aprob Gerente", "Id. Solicitud", "Total"];
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose1 = () => setShowPanel1(false);
+  const handleShow1 = () => setShowPanel1(true);
+  const handleClose2 = () => setShowPanel2(false);
+  const handleShow2 = () => setShowPanel2(true);
 
   return (
     <>
-      <Button variant="secondary" onClick={handleShow}>
-        🔍
+      <Button variant="secondary" onClick={handleShow1}>
+        <BiSearchAlt2 />
       </Button>
+      <Button variant="secondary" onClick={handleShow2}>
+        <BiFolderPlus />
+      </Button>
+      {console.log(data_solicitud)}
 
-      <Modal show={show} onHide={handleClose}
-        fullscreen={true}>
+
+      
+
+      <Modal show={showPanel2} onHide={handleClose2} fullscreen={true}>
         <Modal.Header closeButton>
-          <Modal.Title>Ver Solicitud Interna</Modal.Title>
+          <Modal.Title>Crear Ordenes de Compra</Modal.Title>
         </Modal.Header>
+
         <Modal.Body>
           <div>
-
             <div>
               <Form>
                 <Form.Group
@@ -36,11 +48,6 @@ const ModalVerSoli = () => {
                       <Form.Label>Tiempo esperado</Form.Label>
                       <Form.Control type="date" placeholder="dd/mm/aaaa" />
                     </Form.Group>
-                    {/* <FormControl
-                placeholder="Tiempo esperado           📅"
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-              /> */}
                   </Col>
                   <Col sm="2" >
                   <Form.Label>Estado</Form.Label>
@@ -50,8 +57,7 @@ const ModalVerSoli = () => {
                       <option>Rechazada Jefe I.</option>
                       <option>Aprobada Gerente Gral.</option>
                       <option>Rechazada Gerente Gral.</option>
-                    </Form.Select>
-                    
+                    </Form.Select>   
                   </Col>
                   <Col sm="1" className="button">
                     <Button variant="secondary">Regresar</Button>
@@ -60,23 +66,15 @@ const ModalVerSoli = () => {
               </Form>
             </div>
             <div style={{ justifyContent: "center", margin: "0 250px" }}>
-              <TablaSI titulos={titulos} />
-            </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Form style={{ width: "60%" }}>
-                <Form.Group className="mb-3" controlId="Form.ControlJustifi">
-                  <Form.Label>Justificación</Form.Label>
-                  <Form.Control as="textarea" rows={3} />
-                </Form.Group>
-              </Form>
+              <TablaCOC titulos={titulos2} ref={data_solicitud}/>
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose2}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleClose2}>
             Save Changes
           </Button>
         </Modal.Footer>
