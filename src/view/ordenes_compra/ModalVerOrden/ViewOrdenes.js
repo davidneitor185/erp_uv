@@ -32,7 +32,6 @@ const ViewOrdenes = (props) => {
               <Form>
                 <Form.Group as={Row} style={{ justifyContent: "center", marginTop: 40 }}>
                   <Col sm="2" className="button">
-                    <p>holi aqui falta algo</p>
                     <Form.Label>Estado</Form.Label>
                     <Form.Select >
                       <option>Diligenciada</option>

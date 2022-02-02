@@ -18,6 +18,7 @@ const Solicitudes = () => {
   ];
   const [datos, setDatos] = useState([]);
   const {data} = useAxios("/solicitudes");
+  const tipo = "solicitudes";
   
   useEffect(() => {
     const datico = [];
@@ -32,10 +33,12 @@ const Solicitudes = () => {
         datico.push(solicitud);
              
       })
-      setDatos(datico);      
+      console.log(datico);
+      setDatos(datico); 
+      console.log(datos);       
     }
 
-    console.log(datos);   
+     
   }, [data])
   
 
@@ -69,7 +72,7 @@ const Solicitudes = () => {
         </Form>
       </div>
       <div style={{ justifyContent: "center", margin: "0 250px" }}>
-        <TablaSI titulos={titulos} datos={datos}/>
+        <TablaSI titulos={titulos} datos={datos} tipo={tipo}/>
       </div>
       <BadgeInfe />
     </div>
