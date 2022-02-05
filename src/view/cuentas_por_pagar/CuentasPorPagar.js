@@ -1,7 +1,6 @@
 import React from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
-import BadgeInfe from "../componentes/BadgeInfe";
 import { Link } from "react-router-dom";
 
 const CuentasPorPagar = () => {
@@ -46,7 +45,6 @@ const CuentasPorPagar = () => {
             <div style={{ justifyContent: "center", margin: "0 250px" }}>
                 <TablaSI titulos={titulos} datos={datos} tipo={tipo} />
             </div>
-            <BadgeInfe />
             </div>
             );
 };
