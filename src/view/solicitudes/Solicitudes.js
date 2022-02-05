@@ -1,31 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 //import Paginas from "../componentes/Paginas";
-import BadgeInfe from "../componentes/BadgeInfe";
+import BadgeInfe from "../componentes/badgeinfe_compras/BadgeInfe";
 import useAxios from "../../useAxios";
 import { Link } from "react-router-dom";
+import Navbar from "../componentes/Navbar";
+import { useEffect } from "react";
 
 const Solicitudes = () => {
   const titulos = [
     "Id. Solicitud",
     "Solicitante",
-    "Numero Items",
     "Tiempo esperado",
     "Estado",
     "Opciones",
   ];
-  const datos = [["1", "marbelle","5","05/02/2022","radicado"],[]];
+  const [datos, setDatos] = useState([]);
+  const {data} = useAxios("/solicitudes");
   const tipo = "solicitudes";
-  const solicitudes = useAxios("/solicitudes");
-  const data = () =>{
-    solicitudes.map((soli)=>{
-      console.log(soli);
-    })
-  }
+  
+  useEffect(() => {
+    const datico = [];
+    if(data){
+        data.map((soli)=>{
+        
+        const solicitud=[];
+        solicitud.push(soli.id_solicitud);
+        solicitud.push(soli.nombre_funcionario);
+        solicitud.push(soli.timepo_e);
+        solicitud.push(soli.estado);
+        datico.push(solicitud);
+             
+      })
+      console.log(datico);
+      setDatos(datico); 
+      console.log(datos);       
+    }
 
+     
+  }, [data])
+  
 
   return (
+    <>
+  
+      <Navbar/>
+  
     <div>
       
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
@@ -36,12 +57,12 @@ const Solicitudes = () => {
           <Form.Group as={Row} style={{ justifyContent: "center" }}>
             <Col sm="3">
               <FormControl
-                placeholder="🔍   Search..."
+                placeholder="   Search..."
                 aria-label="Username"
                 aria-describedby="basic-addon1"
               />
             </Col>
-            <Col sm="1" style={{ width: "4%" }}>
+            <Col sm="1" style={{ width: "4%", display: "flex"}}>
               <Button variant="secondary">🔍</Button>
             </Col>
             <Col sm="1">
@@ -55,6 +76,7 @@ const Solicitudes = () => {
       </div>
       <BadgeInfe />
     </div>
+    </>
   );
 };
 

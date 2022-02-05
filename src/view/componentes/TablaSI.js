@@ -8,13 +8,10 @@ import ModalVerSoli from "../solicitudes/modalVerSolicitud";
 import VerDetalleCuentas from "../cuentas_por_pagar/VerDetalleCuentas";
 import PagarCuenta from "../cuentas_por_pagar/PagarCuenta";
 import AnularCuentas from "../cuentas_por_pagar/AnularCuentas";
+import './Table/TablaSI.css';
 
-export const TablaSI = (props) => {
+export const TablaSI = ({titulos, datos, tipo}) => {
 
-  const history = useNavigate();
-  const verSoli = (data) =>{
-    history(`/principal/versolicitud/${data}`);
-  }
   return (
     <div
       style={{
@@ -25,31 +22,31 @@ export const TablaSI = (props) => {
       }}
     >
       <div style={{borderRadius:4}}>
-        {props.children && <props.children/>}
+        
         <Table striped bordered hover>
           <thead>
             <tr>
-              {props.titulos.map((titulo) => {
-                return <th>{titulo}</th>;
+              { titulos.map((titulo, index) => {
+                return <th key={index}>{titulo}</th>;
               })}
             </tr>
           </thead>
           <tbody>
-            {props.tipo && props.datos && props.datos.map((dato) => {
-              if(props.tipo =="solicitud"){
+            {tipo && datos && datos.map((dato) => {
+              if(tipo =="solicitudes"){
                 return (
                   <tr>
-                    {dato.map((datico) => {
-                      return <td>{datico}</td>;
+                    {dato.map((datico, index) => {
+                      return <td key={index}>{datico}</td>;
                     })}
                     <td><ModalVerSoli/></td>
                   </tr>
                 );
-              }else if(props.tipo == "cuentasxpagar"){
+              }else if(tipo == "cuentasxpagar"){
                 return (
                   <tr>
-                    {dato.map((datico) => {
-                      return <td>{datico}</td>;
+                    {dato.map((datico, index) => {
+                      return <td key={index}>{datico}</td>;
                     })}
                     <td>
                       <AnularCuentas />

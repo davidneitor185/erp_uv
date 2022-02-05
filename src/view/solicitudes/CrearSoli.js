@@ -1,14 +1,15 @@
 import React from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
-import BadgeInfe from "../componentes/BadgeInfe";
+import BadgeInfe from "../componentes/badgeinfe_compras/BadgeInfe";
 import crearSoli from "./crearSoli.css";
-
+import Navbar from "../componentes/Navbar";
 const CrearSoli = () => {
   const titulos = ["No.", "Item", "Cantidad", "Opciones"];
   const busqueda = () => {
     return (
-      <>
+      <>     
+      
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{justifyContent: "center", marginBottom:20 }}>
             <Form.Group as={Row}>
@@ -39,7 +40,7 @@ const CrearSoli = () => {
   };
   return (
     <div>
-      
+      <Navbar/>
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
         <h3>Crear Solicitudes Internas</h3>
       </div>

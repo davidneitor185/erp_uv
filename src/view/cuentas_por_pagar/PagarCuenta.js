@@ -3,7 +3,7 @@ import { useState } from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import Modal from 'react-bootstrap/Modal'
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
-import BadgeInfe from "../componentes/BadgeInfe";
+
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import "./ModalPagar.css";
