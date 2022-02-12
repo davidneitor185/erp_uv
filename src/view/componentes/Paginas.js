@@ -3,7 +3,7 @@ import { Pagination } from "react-bootstrap";
 
 const Paginas = () => {
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
+    <div style={{ display: "flex", justifyContent: "center", marginTop:40 }}>
       <Pagination>
         <Pagination.First />
         <Pagination.Prev />

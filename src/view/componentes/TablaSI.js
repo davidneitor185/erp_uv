@@ -14,16 +14,34 @@ export const TablaSI = ({titulos, datos, tipo}) => {
 
   return (
     <div
-      style={{
-        margin: "5%",
+      classname = "tablaSi-content"
+      style={ tipo === "cuentaxpdetalle" ? {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "890px",
+        height: "300px",
+        maxWidth: "890px",
+        maxHeight: "300px",
+        margin: "1%",
+        borderRadius: "45px",
+      } : {
+        display: "flex",
+        flexDirection: "column",
+        alignItems:"center",
+        width: "890px",
+        height: "350px",
+        maxWidth: "890px",
+        maxHeight: "350px",
+        margin: "3%",
         padding: "5%",
         border: "0.5px solid black",
         borderRadius: "45px",
-      }}
+      } }
     >
-      <div style={{borderRadius:4}}>
+      <div style={{borderRadius:4, maxHeight:"290px", overflowY:"scroll"}}>
         
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               { titulos.map((titulo, index) => {
@@ -33,7 +51,7 @@ export const TablaSI = ({titulos, datos, tipo}) => {
           </thead>
           <tbody>
             {tipo && datos && datos.map((dato) => {
-              if(tipo =="solicitudes"){
+              if(tipo === "solicitudes"){
                 return (
                   <tr>
                     {dato.map((datico, index) => {
@@ -42,10 +60,10 @@ export const TablaSI = ({titulos, datos, tipo}) => {
                     <td><ModalVerSoli/></td>
                   </tr>
                 );
-              }else if(tipo == "cuentasxpagar"){
+              }else if(tipo === "cuentasxpagar"){
                 return (
                   <tr>
-                    {dato.map((datico, index) => {
+                    { dato.map((datico, index) => {
                       return <td key={index}>{datico}</td>;
                     })}
                     <td>
@@ -53,6 +71,14 @@ export const TablaSI = ({titulos, datos, tipo}) => {
                       <VerDetalleCuentas />
                       <PagarCuenta />
                       </td>
+                  </tr>
+                );
+              }else if(tipo === "cuentaxpdetalle"){
+                return (
+                  <tr>
+                    { dato.map((datico, index) => {
+                      return <td key={index}>{datico}</td>;
+                    })}
                   </tr>
                 );
               }

@@ -3,8 +3,8 @@ import React from 'react';
 import { Button, Nav } from 'react-bootstrap';
 
 const Navbar = () => {
-  return <div style={{ paddingLeft: 25, paddingRight: 25, marginTop: 30 }}>
-    <Nav justify variant="tabs" defaultActiveKey="/home">
+  return <div style={{ display:"flex", flexDirection:"row" }}>
+    <Nav bg="light" justify variant="tabs" defaultActiveKey="/home" style={{ alignItems:"center" }}>
       <Nav.Item>
         <Nav.Link href="/principal">Compras</Nav.Link>
       </Nav.Item>

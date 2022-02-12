@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import Modal from 'react-bootstrap/Modal';
-import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
@@ -13,20 +13,14 @@ const VerDetalleCuentas = () =>{
         const [item, setItem] = useState([
           //Aquí va algo
         ]);
-
-    const tipo = "algo";
+    const tipo = "cuentaxpdetalle";
 
     const titulos = [
-        "Identificación",
-        "Fecha Límite",
-        "Valor A Pagar",
-        "Estado",
-        "Recibo",
-        "Opciones",
+        "No.", "Item", "Cantidad", "Costo", "Costo Total"
     ];
 
-    const datos = [["177898", "31-01-20-22", "$798.000", "Activo", "No Aplica"], 
-    ["177899", "31-01-20-22", "$60.000", "Activo", "No Aplica"]];
+    const items = [ ["177898", "31-01-2022", "$798.000", "Activo", "No Aplica"], 
+    ["177899", "31-01-2022", "$60.000", "Activo", "No Aplica"], ["algo"], ["algo"], ["algo"]];
       
         const setModal = (valor) => {
           setShow(valor);
@@ -52,53 +46,56 @@ const VerDetalleCuentas = () =>{
       ><Button className="me-2" variant="outline-dark" size="sm" onClick={() => setModal(true)}>
                 🔍
               </Button></OverlayTrigger>
-            <Modal show={show} fullscreen={fullscreen} onHide={() => setModal(false)}>
+            <Modal
+            show={show}
+            backdrop="static"
+            keyboard={false}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            onHide={() => setModal(false)}
+            centered>
               <Modal.Header closeButton>
-                <Modal.Title>Detalles</Modal.Title>
+                <Modal.Title>Ver Detalles</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-              <Form className="form rounded p-4 p-sm-3">
-                    <div className="tituloModPagar">
-                    <h3>Detalles de las cuentas por pagar</h3>
+              <div className="tituloDetacxp">
+                    <h3>Detalles de cuentas por pagar</h3>
                     </div>
+              <div 
+            style={{
+            margin: "0%",
+            padding: "1%",
+            border: "0.5px solid black",
+            borderRadius: "45px",
+            height: "530px"
+          }} > 
+              <Form className="form rounded p-4 p-sm-3">
                         <Form.Group as={Row} className="mb-3" controlId="primera_linea" >
                           <Col>
                               <Form.Label>Orden de compra asociada</Form.Label>
-                              <Form.Select name="ordenA" >
-                              <option>Orden 1</option>
-                              <option>Orden 2</option>
-                              <option>Orden 3</option>
-                            </Form.Select>
+                              <Form.Control placeholder="Orden Compra" name="orden" onChange={handleInputChange}/>
+                          </Col>
+                          <Col> 
+                            <Form.Label>Proveedor</Form.Label>
+                            <Form.Control placeholder="Provedorcito" name="proveedor" onChange={handleInputChange}/>
                           </Col>
                           <Col>
-                          <Form.Label>Proveedor</Form.Label>
-                            <Form.Select name="proveedor">
-                              <option>Proveedor 1</option>
-                              <option>Proveedor 2</option>
-                              <option>Proveedor 3</option>
-                            </Form.Select>
+                            <Form.Label>Fecha límite para pago</Form.Label>
+                            <Form.Control placeholder="Ingrese la fecha" name="fecha" onChange={handleInputChange}/>
                           </Col>
-                          <Col>
-                          <Form.Label>Fecha límite para realizar el pago</Form.Label>
-                          <Form.Control placeholder="Ingrese la fecha" name="fecha" onChange={handleInputChange}/>
-                          </Col>
-                        </Form.Group>
-                        <Form.Group as={Row} className="mb-3" controlId="saldo" >
-                          <Col>
-                              <Form.Label>Saldo a pagar</Form.Label>
-                              <Form.Control placeholder="$" name="saldo" onChange={handleInputChange}/>
-                              <Form.Text className="text-muted">
-                                Cuenta a pagar: "Ejemplo"
-                              </Form.Text>
-                          </Col>
-                          <Col style={{ marginLeft:"50px"}}>
-                            <Button variant="success" style={{ marginTop: "30px"}}>Realizar Pago</Button>
-                            <Button variant="secondary" style={{ marginTop: "30px", marginLeft: "60px"}} onClick={() => setModal(false)}>Cancelar</Button>
-                          </Col>
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "320px", maxHeight: "320px", marginTop:10 }}>
+                        <TablaSI titulos={titulos} datos={items} tipo={tipo} />
+                      </div>
+                      <Col>
+                        <Form.Label>Estado</Form.Label>
+                        <Form.Control placeholder="?" name="estado" onChange={handleInputChange} />
+                      </Col>
+                      <Col>
+                        <Form.Label>Número recibo de pago</Form.Label>
+                        <Form.Control placeholder="no." name="recibo" onChange={handleInputChange} />
+                      </Col>
                         </Form.Group>
                   </Form>
-              <div style={{ justifyContent: "center", margin: "0 250px" }}>
-                <TablaSI titulos={titulos} datos={item} tipo={tipo} />
               </div>
               </Modal.Body>
             </Modal>
