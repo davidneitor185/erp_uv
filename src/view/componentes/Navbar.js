@@ -9,7 +9,7 @@ const Navbar = () => {
     <Nav.Link href="/cuentasporpagar">Cuentas Por Pagar</Nav.Link>
   </Nav.Item>
   <Nav.Item>
-    <Nav.Link href="/">Cuentas Por Cobrar</Nav.Link>
+    <Nav.Link href="/cuentasporcobrar">Cuentas Por Cobrar</Nav.Link>
   </Nav.Item>
   <Nav.Item>
     <Nav.Link href="/principal">Compras</Nav.Link>
@@ -18,7 +18,7 @@ const Navbar = () => {
     <Nav.Link href="/">Inventario</Nav.Link>
   </Nav.Item>
   <Nav.Item>
-    <Nav.Link href="/">Roles & Perfiles</Nav.Link>
+    <Nav.Link href="/rolesperfiles">Roles & Perfiles</Nav.Link>
   </Nav.Item>
   <Nav.Item>
     <Nav.Link href="/">Servicios</Nav.Link>
