@@ -33,7 +33,7 @@ export const TablaSI = ({titulos, datos, tipo}) => {
           </thead>
           <tbody>
             {tipo && datos && datos.map((dato) => {
-              if(tipo =="solicitudes"){
+              if(tipo === "solicitudes"){
                 return (
                   <tr>
                     {dato.map((datico, index) => {
@@ -42,7 +42,7 @@ export const TablaSI = ({titulos, datos, tipo}) => {
                     <td><ModalVerSoli/></td>
                   </tr>
                 );
-              }else if(tipo == "cuentasxpagar"){
+              }else if(tipo === "cuentasxpagar"){
                 return (
                   <tr>
                     {dato.map((datico, index) => {
@@ -53,6 +53,20 @@ export const TablaSI = ({titulos, datos, tipo}) => {
                       <VerDetalleCuentas />
                       <PagarCuenta />
                       </td>
+                  </tr>
+                );
+              }else if(tipo === "servicios"){
+                return (
+                  <tr>
+                    {dato.map((iterateDato, index) => {
+                      return <td key={index}>{iterateDato}</td>
+                    })}
+                    <td>
+                      <div className="btn-group" role="group" aria-label="">
+                        <button type="button" className="btn btn-warning">Editar</button>
+                        <button type="button" className="btn btn-danger">Borrar</button>
+                      </div>
+                    </td>
                   </tr>
                 );
               }

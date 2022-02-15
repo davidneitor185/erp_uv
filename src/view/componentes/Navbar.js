@@ -21,7 +21,7 @@ const Navbar = () => {
     <Nav.Link href="/">Roles & Perfiles</Nav.Link>
   </Nav.Item>
   <Nav.Item>
-    <Nav.Link href="/">Servicios</Nav.Link>
+    <Nav.Link href="/servicios">Servicios</Nav.Link>
   </Nav.Item>
   <Nav.Item>
     <Nav.Link href="/">Datos Maestros</Nav.Link>
