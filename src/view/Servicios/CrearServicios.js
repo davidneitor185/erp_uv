@@ -6,14 +6,27 @@ import axios from "axios";
 
 export const CrearServicios = () => {
 
-    const url = "http://localhost:5000/IDclientes";
+    const url = "http://localhost:5000";
     const[data, setData] = useState(null);
+    const[func, setFunc] = useState(null);
 
     useEffect(() => {
-        axios.get(url).then((response) => {
-            setData(response.data)
+        axios.get(url + "/IDclientes").then((response) => {
+            setData(response.data);
         });
     }, []);
+
+    function createOS() {
+        axios.post(url + "/crearServicio", {
+            empleado: 4,
+            estado: "Asignado",
+            comentarios: "xdxdxdxdxd",
+            costo: 2323232323,
+            cliente: 2
+        }).then((response) => {
+            setFunc(response.data);
+        })
+    }
 
     if (!data) return(<div>Error</div>);
 
@@ -35,9 +48,13 @@ export const CrearServicios = () => {
                         <Form.Label>Asignar Empleado</Form.Label>
                         <Form.Select aria-label="Default select example">
                             <option>Funcionario</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            {/*func.map((ob_func, index) => {
+                                return(
+                                    <option value={index} key={index}>
+                                        {ob_func.id_funcionario + ": " + ob_func.nombre_funcionario}
+                                    </option>
+                                )
+                            })*/}
                         </Form.Select>
                     </Form.Group>
 
@@ -81,6 +98,9 @@ export const CrearServicios = () => {
                     Submit
                 </Button>
             </Form>
+            <button onClick={createOS}>
+                add
+            </button>
             <div style={{paddingTop: "3%", width: "100%"}}>
                 <BadgeServicio/>
             </div>
