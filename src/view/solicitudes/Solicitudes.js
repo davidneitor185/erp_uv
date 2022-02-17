@@ -87,17 +87,7 @@ class Solicitudes extends React.Component {
                       let fecha = Date();
                       fecha = dato.tiempo_e;
                       fecha = fecha.split("T");
-                      if (this.roluser==1) {
-                        return (
-                          <tr>
-                            <td>{dato.id_solicitud}</td>
-                            <td>{dato.nombre_funcionario}</td>
-                            <td>{fecha[0]}</td>
-                            <td>{dato.estado}</td>
-                            <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link></td>
-                          </tr>
-                        );
-                      }else if(this.roluser==2){
+                      if(this.roluser==2){
                         if(dato.estado=="Diligenciada"){
                           return (
                             <tr>
@@ -121,6 +111,16 @@ class Solicitudes extends React.Component {
                             </tr>
                           );
                         }
+                      }else{
+                        return (
+                          <tr>
+                            <td>{dato.id_solicitud}</td>
+                            <td>{dato.nombre_funcionario}</td>
+                            <td>{fecha[0]}</td>
+                            <td>{dato.estado}</td>
+                            <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link></td>
+                          </tr>
+                        );
                       }
                       
                     })}
