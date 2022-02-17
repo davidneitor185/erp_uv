@@ -23,6 +23,7 @@ function createRow(elemento,cantidad) {
   const [elementoName, setElementoName] = useState("");
   const [cantidadElement, setCantidadElement] = useState("");
   
+  
   const postSoli = async (body) => {
     try {
       //console.log(body);

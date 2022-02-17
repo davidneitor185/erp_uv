@@ -12,6 +12,7 @@ class Solicitudes extends React.Component {
     super(props);
     this.state = { data: [], isDataLoaded: false }
   }
+  roluser = JSON.parse(window.localStorage.getItem('user')).id_rol
 
   cargarSolicitudes() {
     fetch(url + "solicitudes")
@@ -86,15 +87,42 @@ class Solicitudes extends React.Component {
                       let fecha = Date();
                       fecha = dato.tiempo_e;
                       fecha = fecha.split("T");
-                      return (
-                        <tr>
-                          <td>{dato.id_solicitud}</td>
-                          <td>{dato.nombre_funcionario}</td>
-                          <td>{fecha[0]}</td>
-                          <td>{dato.estado}</td>
-                          <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link></td>
-                        </tr>
-                      );
+                      if (this.roluser==1) {
+                        return (
+                          <tr>
+                            <td>{dato.id_solicitud}</td>
+                            <td>{dato.nombre_funcionario}</td>
+                            <td>{fecha[0]}</td>
+                            <td>{dato.estado}</td>
+                            <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link></td>
+                          </tr>
+                        );
+                      }else if(this.roluser==2){
+                        if(dato.estado=="Diligenciada"){
+                          return (
+                            <tr>
+                              <td>{dato.id_solicitud}</td>
+                              <td>{dato.nombre_funcionario}</td>
+                              <td>{fecha[0]}</td>
+                              <td>{dato.estado}</td>
+                              <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link></td>
+                            </tr>
+                          );
+                        }
+                      }else if(this.roluser==3){
+                        if(dato.estado=="Aprobada Jefe I."){
+                          return (
+                            <tr>
+                              <td>{dato.id_solicitud}</td>
+                              <td>{dato.nombre_funcionario}</td>
+                              <td>{fecha[0]}</td>
+                              <td>{dato.estado}</td>
+                              <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link></td>
+                            </tr>
+                          );
+                        }
+                      }
+                      
                     })}
                   </thead>
                 </Table>
