@@ -54,7 +54,7 @@ const Navbar = () => {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Button>Logout</Button>
+      <Link to={"/"} className="btn btn-primary" >Logout</Link>
       </Nav.Item>
     </Nav>
   </div>;

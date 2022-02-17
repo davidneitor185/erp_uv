@@ -146,9 +146,9 @@ class VerSoliClass extends React.Component {
                         <Link className="button btn btn-secondary" to={"/principal"}>
                             Volver
                         </Link>
-                        <Button variant="primary" className="button" onClick={()=> this.updateSoli()} >
+                        <Link className="button btn btn-primary" onClick={()=> this.updateSoli()} to={"/principal"} >
                             Guardar
-                        </Button>
+                        </Link>
                     </div>
 
                 </>

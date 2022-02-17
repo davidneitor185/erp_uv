@@ -10,17 +10,34 @@ import { useState } from "react";
 import { url } from "../../db/variabledb";
 import axios from "axios";
 
+function createRow(elemento,cantidad) {
+  return { elemento,cantidad };
+}
 
  const CrearSoli = () => {
  
   const { dispatch } = useContext(UserContext);
   const [justificacion, setJustificacion] = useState("");
   const [tiempo_e, setTiempo_e] = useState("");
+  const [elementos, setElementos] = useState([]);
+  const [elementoName, setElementoName] = useState("");
+  const [cantidadElement, setCantidadElement] = useState("");
   
   const postSoli = async (body) => {
     try {
-      console.log(body);
+      //console.log(body);
       const response = await axios.post(url+"postsolicitud", body);
+      return response;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
+  const postElement = async (body) => {
+    try {
+      //console.log(body);
+      const response = await axios.post(url+"postelement", body);
       return true;
     } catch (error) {
       console.error(error);
@@ -28,7 +45,8 @@ import axios from "axios";
     }
   };
 
-  const cargarSoli = ()=>{
+
+  const cargarSoli = async ()=>{
     let user = window.localStorage.getItem('user');
     let id_funcionario = JSON.parse(user).id_funcionario;
     let body = {
@@ -38,8 +56,25 @@ import axios from "axios";
       "estado": "Diligenciada"
     }
    
-    postSoli(body);
+    let soli_id = await postSoli(body);
+    let id_soli = soli_id.data[0].id_solicitud;
+    elementos.map((ele)=>{
+      let body2 = {
+        "nombre": ele.elemento,
+        "cantidad": ele.cantidad,
+        "id_solicitud": id_soli
+      }
+      postElement(body2)
+    })
     
+    
+    
+  };
+
+  const agregarelement = () =>{
+    
+    let row = createRow(elementoName,cantidadElement);
+    setElementos([...elementos, row]);
     
   };
   
@@ -99,6 +134,8 @@ import axios from "axios";
                           placeholder="Elemento"
                           aria-label="Username"
                           aria-describedby="basic-addon1"
+                          value={elementoName}
+                          onChange={(e)=>setElementoName(e.target.value)}
                         />
                       </Col>
                       <Col sm="3">
@@ -106,10 +143,12 @@ import axios from "axios";
                           placeholder="Cantidad"
                           aria-label="Username"
                           aria-describedby="basic-addon1"
+                          value={cantidadElement}
+                          onChange={(e)=>setCantidadElement(e.target.value)}
                         />
                       </Col>
                       <Col sm="1">
-                        <Button variant="secondary" style={{ width: 80 }}>
+                        <Button variant="secondary" style={{ width: 80 }} onClick={()=>agregarelement()}>
                           + Item
                         </Button>
                       </Col>
@@ -123,17 +162,16 @@ import axios from "axios";
                       <th>Elemento</th>
                       <th>Cantidad</th>
                     </tr>
-                     {/* {elementos.map((dato, index) => {
-                      let fecha = Date();
-
+                      {elementos.map((dato, index) => {
+                      
                       return (
-                        <tr>
+                        <tr key={index}>
                           <td>{index + 1}</td>
-                          <td>{dato.nombre}</td>
+                          <td>{dato.elemento}</td>
                           <td>{dato.cantidad}</td>
                         </tr>
                       );
-                    })} */}
+                    })}
                   </thead>
                 </Table>
               </div>
