@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import useAxios from "../../useAxios";
 import Navbar from "../componentes/Navbar";
-import { FormControl, Button, Form, Row, Col, Modal, ModalBody, ModalFooter } from "react-bootstrap";
+import { FormControl, Button, Form, Row, Col, Modal, ModalBody, ModalFooter, ModalTitle } from "react-bootstrap";
 import { TablaSI } from "../componentes/TablaSI";
-import {BiSearchAlt} from "react-icons/bi";
+import {BiSearchAlt, BiEditAlt} from "react-icons/bi";
+import {AiFillDelete, AiFillFileAdd} from "react-icons/ai";
 import BadgeServicio from "./FooterServicios/BadgeServicio";
 import { Table } from "react-bootstrap";
 import Paginas from "../componentes/Paginas";
@@ -61,7 +62,9 @@ const Servicios = () => {
     //const {data} = useAxios("/ordenesServicio");
     const [listOrdenes, setListOrdenes] = useState([]);
     const [selectOrden, setSelectOrden] = useState({});
-    const [viewEliminar, setEliminar] = useState(false);
+    const [viewModalDelete, setModalDelete] = useState(false);
+    const [viewModalEdit, setModalEdit] = useState(false);
+    const [viewModalAdd, setModalAdd] = useState(false);
     const [data, setData] = useState([]);
 
     const getData = () => {
@@ -106,6 +109,10 @@ const Servicios = () => {
     }, []);
 
     console.log(data);
+
+    //Quitar estos:
+    const handleAddFormSubmit = () => {};
+    const handleAddFormChange = () => {};
 
     return(
         <>
@@ -171,13 +178,14 @@ const Servicios = () => {
                                         <tr key={index}>
                                             <td>{row.idordenservicio}</td>
                                             <td>{row.comentarios}</td>
-                                            <td>{row.costototal}</td>
+                                            <td>{new Intl.NumberFormat('en-US').format(row.costototal)}</td>
                                             <td>{row.empleadoasignado}</td>
                                             <td>{row.estado}</td>
                                             <td>
                                                 <div className="btn-group" role="group" aria-label="">
-                                                    <button type="button" className="btn btn-warning">Editar</button>
-                                                    <button  onClick={() => {selectOS(row); setEliminar(true)}} className="btn btn-danger">Borrar</button>
+                                                    <button type="button" onClick={() => {setModalEdit(true)}} className="btn btn-outline-warning"><BiEditAlt /></button>
+                                                    <button  onClick={() => {selectOS(row); setModalDelete(true)}} className="btn btn-outline-danger"><AiFillDelete /></button>
+                                                    <button type="button" onClick={() => setModalAdd(true)} className="btn btn-outline-success"><AiFillFileAdd /></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -242,15 +250,123 @@ const Servicios = () => {
                 <BadgeServicio/>
 
 
-                
-                <Modal show={viewEliminar} onHide={() => setEliminar(false)}>
+                {/* Modal de Eliminar Orden de Servicio */}
+                <Modal show={viewModalDelete} onHide={() => setModalDelete(false)}>
+                    <Modal.Header style={{backgroundColor: "crimson"}}>
+                        <Modal.Title>Eliminar Orden de Servicio</Modal.Title>
+                    </Modal.Header>
                     <ModalBody>
-                        Estás seguro que deseas eliminar la orden {/*selectOrden && selectOrden[0]*/}
+                        ¿Estás seguro que deseas eliminar la orden {selectOrden.idordenservicio} y todos sus registros asociados?
                     </ModalBody>
                     <ModalFooter>
-                        <button className="btn btn-danger" onClick={() => {deleteOrdenServicio(selectOrden.idordenservicio); setEliminar(false)}}>Sí</button>
-                        <button className="btn btn-secundary" onClick={()=>setEliminar(false)}>No</button>
+                        <button className="btn btn-danger" onClick={() => {deleteOrdenServicio(selectOrden.idordenservicio); setModalDelete(false)}}>Sí</button>
+                        <button className="btn btn-secundary" onClick={()=>setModalDelete(false)}>No</button>
                     </ModalFooter>
+                </Modal>
+
+                {/* Modal de Editar Ordenes de Servicio */}
+                <Modal size="lg" show={viewModalEdit} onHide={() => setModalEdit(false)} aria-labelledby="example-modal-sizes-title-lg">
+                    <Modal.Header closeButton style={{backgroundColor: "dodgerblue"}}>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                            Editar Orden de Servicio
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body style={{backgroundColor: "aliceblue"}}>
+                        <div style={{display: "flex", flexDirection: "column", 
+                                alignItems: "center", justifyContent: "center", paddingTop: "5%", width: "100%"}}>
+                            <Form onSubmit={handleAddFormSubmit} style={{width: "50%"}}>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} controlId="formBasicEmail">
+                                        <Form.Label>Asignar Empleado</Form.Label>
+                                        <Form.Select aria-label="Default select example">
+                                            <option>Funcionario</option>
+                                            <option value="1">Func 1</option>
+                                            <option value="2">Func 2</option>
+                                        </Form.Select>
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} controlId="formBasicPassword">
+                                        <Form.Label>Estado</Form.Label>
+                                        <Form.Select aria-label="Default select example">
+                                            <option>Select Estado</option>
+                                            <option value="1">Asignado</option>
+                                            <option value="2">En tramite</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Row>
+
+                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                                    <Form.Label>Comentarios</Form.Label>
+                                    <Form.Control name="phoneNumber" as="textarea"  onChange={handleAddFormChange}/>
+                                </Form.Group>
+
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} controlId="formBasicPassword">
+                                        <Form.Label>Costo Total</Form.Label>
+                                        <Form.Control name="email" type="text" placeholder="$0000,00" onChange={handleAddFormChange}/>
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} controlId="formBasicPassword">
+                                        <Form.Label>Cliente</Form.Label>
+                                        <Form.Select aria-label="Default select example">
+                                            <option>Select ID</option>
+                                            {/*data.map((data_id, index) => {
+                                                return(
+                                                    <option value={index} key={index}>
+                                                        {data_id.id}
+                                                    </option>
+                                                )
+                                            })*/}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Row>
+                            </Form>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setModalEdit(false)}>
+                            Cerrar
+                        </Button>
+                        <Button variant="primary" onClick={() => setModalDelete(false)}>
+                            Guardar Cambios
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* Modal de Agregar Servicios a ordenes */}
+                <Modal show={viewModalAdd} onHide={() => setModalAdd(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Agregar Items en la Orden</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control type="email" placeholder="Enter email" />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control type="password" placeholder="Password" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                <Form.Check type="checkbox" label="Check me out" />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Submit
+                            </Button>
+                        </Form>
+                    </Modal.Body>
+
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => setModalAdd(false)}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={() => setModalAdd(false)}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
             </div>
         </>
