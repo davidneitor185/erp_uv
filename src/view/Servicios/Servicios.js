@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import useAxios from "../../useAxios";
 import Navbar from "../componentes/Navbar";
-import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
+import { FormControl, Button, Form, Row, Col, Modal, ModalBody, ModalFooter } from "react-bootstrap";
 import { TablaSI } from "../componentes/TablaSI";
 import {BiSearchAlt} from "react-icons/bi";
 import BadgeServicio from "./FooterServicios/BadgeServicio";
+import { Table } from "react-bootstrap";
+import Paginas from "../componentes/Paginas";
+import "../componentes/Table/TablaSI.css"
 
 import "./Servicios.css";
 import datae from "./mock-data.json";
+import axios from "axios";
 
 const Servicios = () => {
 
     //quede en el minuto 18:50
-    const[contacts, setContacts] = useState(datae);
+    /*const[contacts, setContacts] = useState(datae);
     const[addFormData, setAddFormData] = useState({
         fullName: '',
         address: '',
@@ -44,7 +48,7 @@ const Servicios = () => {
 
         const newContacts = [...contacts, newContact];
         setContacts(newContacts);
-    };
+    };*/
 
     const titles = [
         "No",
@@ -54,11 +58,31 @@ const Servicios = () => {
         "Estado",
         "Opciones",
     ];
-    const {data} = useAxios("/ordenesServicio");
+    //const {data} = useAxios("/ordenesServicio");
     const [listOrdenes, setListOrdenes] = useState([]);
-    const type = "servicios";
+    const [selectOrden, setSelectOrden] = useState({});
+    const [viewEliminar, setEliminar] = useState(false);
+    const [data, setData] = useState([]);
 
-    useEffect(() => {
+    const getData = () => {
+        axios.get("http://localhost:5000/ordenesServicio").then((res) => {
+            setData(res.data);
+        });
+    }
+
+    const selectOS = (os) => {
+        setSelectOrden(os);
+    }
+
+    const deleteOrdenServicio = (ref) => {
+        axios.delete(`http://localhost:5000/borraOServicio/${ref}`).then((response) => {
+            console.log(response.data);
+            console.log("sirvio");
+            getData();
+        });
+    }
+
+    /*useEffect(() => {
         const ref_list = [];
         if(data) {
             data.map((elem) => {
@@ -74,8 +98,14 @@ const Servicios = () => {
         }
         else
             console.log("error");
-    }, [data]);
+    }, [data]);*/
+    
 
+    useEffect(() => {
+        getData();
+    }, []);
+
+    console.log(data);
 
     return(
         <>
@@ -100,8 +130,64 @@ const Servicios = () => {
                         </Form.Group>
                     </Form>
                 </div>
-                <div style={{ justifyContent: "center", margin: "0 150px" }}>
-                    <TablaSI titulos={titles} datos={listOrdenes} tipo={type}/>
+                <div style={{ justifyContent: "center", margin: "0 70px" }}>
+                    {/*<TablaSI titulos={titles} datos={listOrdenes} tipo={type}/>*/}
+                    <div
+                        style={{
+                            margin: "5%",
+                            padding: "5%",
+                            border: "0.5px solid black",
+                            borderRadius: "45px",
+                        }}
+                        >
+                        <div style={{borderRadius:4}}>
+                            
+                            <Table striped bordered hover>
+                            <thead>
+                                <tr>
+                                    {titles.map((titulo, index) => {
+                                        return <th key={index}>{titulo}</th>;
+                                    })}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {/*listOrdenes.map((dato) => {
+                                    return (
+                                    <tr>
+                                        {dato.map((iterateDato, index) => {
+                                        return <td key={index}>{iterateDato}</td>
+                                        })}
+                                        <td>
+                                        <div className="btn-group" role="group" aria-label="">
+                                            <button type="button" className="btn btn-warning">Editar</button>
+                                            <button  onClick={() => {selectOS(dato); setEliminar(true)}} className="btn btn-danger">Borrar</button>
+                                        </div>
+                                        </td>
+                                    </tr>
+                                    );
+                                })*/
+                                data.map((row, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{row.idordenservicio}</td>
+                                            <td>{row.comentarios}</td>
+                                            <td>{row.costototal}</td>
+                                            <td>{row.empleadoasignado}</td>
+                                            <td>{row.estado}</td>
+                                            <td>
+                                                <div className="btn-group" role="group" aria-label="">
+                                                    <button type="button" className="btn btn-warning">Editar</button>
+                                                    <button  onClick={() => {selectOS(row); setEliminar(true)}} className="btn btn-danger">Borrar</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                            </Table>
+                        </div>
+                        <Paginas />
+                        </div>
                     {/*<div className="app-container">
                         <table className="table">
                             <thead>
@@ -154,6 +240,18 @@ const Servicios = () => {
                     </div>*/}
                 </div>
                 <BadgeServicio/>
+
+
+                
+                <Modal show={viewEliminar} onHide={() => setEliminar(false)}>
+                    <ModalBody>
+                        Estás seguro que deseas eliminar la orden {/*selectOrden && selectOrden[0]*/}
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className="btn btn-danger" onClick={() => {deleteOrdenServicio(selectOrden.idordenservicio); setEliminar(false)}}>Sí</button>
+                        <button className="btn btn-secundary" onClick={()=>setEliminar(false)}>No</button>
+                    </ModalFooter>
+                </Modal>
             </div>
         </>
     );

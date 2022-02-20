@@ -1,5 +1,5 @@
 import BadgeServicio from "./FooterServicios/BadgeServicio"
-import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
+import { FormControl, Button, Form, Row, Col, Spinner } from "react-bootstrap";
 import Navbar from "../componentes/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -30,16 +30,21 @@ export const CrearServicios = () => {
         axios.post(url + "/crearServicio", {
             empleado: 3,
             estado: "En tramite",
-            comentarios: "GTX 1080TI",
-            costo: 2890000,
-            cliente: 4
+            comentarios: "Asus rog x37",
+            costo: 4590300,
+            cliente: 2
         }).then((response) => {
             setFunc(response.data);
         })
     }
 
 
-    if (!data) return(<div>Error</div>);
+    if (!data) return(<div style={{display: "flex", alignItems: "center", width: "100%", height: "100%", gap: "15px"}}>
+        <Spinner animation="border" role="status" variant="danger">
+            <span className="visually-hidden">Loading...</span>
+        </Spinner>
+        <di>Loanding ...</di>
+    </div>);
 
     const handleAddFormChange = () => {
 
