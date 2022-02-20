@@ -10,23 +10,34 @@ export const CrearServicios = () => {
     const[data, setData] = useState(null);
     const[func, setFunc] = useState(null);
 
+    function getClientes() {
+        return axios.get(url + "/IDclientes");
+    }
+    function getFuncionarios() {
+        return axios.get(url + "/funcionarios");
+    }
+
     useEffect(() => {
         axios.get(url + "/IDclientes").then((response) => {
             setData(response.data);
         });
+        /*axios.all([getClientes()]).then((cliente) => {
+            setData(cliente.data);
+        }).catch(e => console.log(e));*/
     }, []);
 
     function createOS() {
         axios.post(url + "/crearServicio", {
-            empleado: 4,
-            estado: "Asignado",
-            comentarios: "xdxdxdxdxd",
-            costo: 2323232323,
-            cliente: 2
+            empleado: 3,
+            estado: "En tramite",
+            comentarios: "GTX 1080TI",
+            costo: 2890000,
+            cliente: 4
         }).then((response) => {
             setFunc(response.data);
         })
     }
+
 
     if (!data) return(<div>Error</div>);
 
