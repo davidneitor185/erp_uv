@@ -17,9 +17,9 @@ const Ordenes_compra = () => {
           </div>
           <div> 
           </div>
-          <div className='ancho'>
+          
             <Table_Compras />
-          </div>
+         
           
       </div>
       <BadgeInfe></BadgeInfe>

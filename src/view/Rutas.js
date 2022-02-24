@@ -6,7 +6,8 @@ import CrearSoli from "./solicitudes/CrearSoli";
 import VerSoli from "./solicitudes/VerSolicitud";
 import Ordenes_compra from './ordenes_compra/ordenes_compra';
 import CuentasPorPagar from "./cuentas_por_pagar/CuentasPorPagar";
-
+import ViewOrdenes from "./ordenes_compra/verOrdenCompra/ViewOrdenes";
+import CrearOrdenC from "./ordenes_compra/CrearOrdenC";
 
 
 function Rutas() {
@@ -18,11 +19,11 @@ function Rutas() {
             <Route exact path="/" element={<Login />} />
             <Route path="/principal" element={<Solicitudes/>}/>
             <Route path="/principal/crearsolicitud" element={<CrearSoli />}/>
-            <Route path="/principal/versolicitud/:id" element={<VerSoli/>}/>
-            
-            <Route path="/principal/ordenes_compra" element={<Ordenes_compra />}/>         
+            <Route path="/principal/versolicitud/:id" element={<VerSoli/>}/>            
+            <Route path="/principal/ordenes_compra" element={<Ordenes_compra />}/>
+            <Route path="/principal/verorden/:id" element={<ViewOrdenes/>}/>           
             <Route path="/cuentasporpagar" element={<CuentasPorPagar />}/>
-
+            <Route path="/crearoc/:id" element={<CrearOrdenC />}/>
           </Routes>
         </Router>
       </UserState>

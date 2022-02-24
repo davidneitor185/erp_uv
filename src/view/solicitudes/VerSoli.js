@@ -281,11 +281,7 @@ class VerSoliClass extends React.Component {
                                             <Form.Label>Tiempo esperado</Form.Label>
                                             <Form.Control type="date" readOnly value={tiempo_e} />
                                         </Form.Group>
-                                        {/* <FormControl
-              placeholder="Tiempo esperado           📅"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            /> */}
+                                      
                                     </Col>
                                     <Col sm="2" >
                                         <Form.Label>Estado</Form.Label>

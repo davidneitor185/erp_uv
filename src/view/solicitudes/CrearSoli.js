@@ -9,6 +9,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { url } from "../../db/variabledb";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function createRow(elemento,cantidad) {
   return { elemento,cantidad };
@@ -103,16 +104,16 @@ function createRow(elemento,cantidad) {
 
                 </Col>
                 <Col sm="1" className="button bton" style={{ width: "10%" }}>
-                  <Button
-                    variant="secondary"
+                  <Link
+                    className="btn btn-secondary" to={"/principal"}
                     style={{ backgroundColor: "#4a3187" }}
                     onClick={()=>cargarSoli()}
                   >
                     Guardar
-                  </Button>
+                  </Link>
                 </Col>
                 <Col sm="1" className="button bton">
-                  <Button variant="secondary">Regresar</Button>
+                  <Link className="btn btn-secondary" to={"/principal"}>Regresar</Link>
                 </Col>
               </Form.Group>
             </Form>
