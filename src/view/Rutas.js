@@ -8,6 +8,7 @@ import Ordenes_compra from './ordenes_compra/ordenes_compra';
 import CuentasPorPagar from "./cuentas_por_pagar/CuentasPorPagar";
 import ViewOrdenes from "./ordenes_compra/verOrdenCompra/ViewOrdenes";
 import CrearOrdenC from "./ordenes_compra/CrearOrdenC";
+import CuentasContables from "./componentes/cuentas_contables/cuentasContables";
 
 
 function Rutas() {
@@ -24,6 +25,7 @@ function Rutas() {
             <Route path="/principal/verorden/:id" element={<ViewOrdenes/>}/>           
             <Route path="/cuentasporpagar" element={<CuentasPorPagar />}/>
             <Route path="/crearoc/:id" element={<CrearOrdenC />}/>
+            <Route path="/cuentascontables" element={<CuentasContables />}/>
           </Routes>
         </Router>
       </UserState>
