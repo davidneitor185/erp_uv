@@ -12,6 +12,11 @@ const BadgeServicio = () => {
         {
             "title": 'Crear Orden de servicio',
             "link": '/crearOrdenServicios',
+        },
+        //This title is provivional
+        {
+            "title": 'Editar estado OS',
+            "link": '/MisOrdenesServicio',
         }
     ];
 

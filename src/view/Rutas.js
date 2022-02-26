@@ -3,11 +3,12 @@ import Login from "./Login/Login";
 import UserState from "../User/UserState";
 import Solicitudes from "./solicitudes/Solicitudes";
 import CrearSoli from "./solicitudes/CrearSoli";
-
+import EstadoOS from "./Servicios/EstadoOS";
 import Ordenes_compra from './ordenes_compra/ordenes_compra';
 import CuentasPorPagar from "./cuentas_por_pagar/CuentasPorPagar";
 import Servicios from "./Servicios/Servicios";
 import { CrearServicios } from "./Servicios/CrearServicios";
+import { TablaBarata } from "./Servicios/TablaBarata";
 
 
 
@@ -24,6 +25,8 @@ function Rutas() {
             <Route path="/cuentasporpagar" element={<CuentasPorPagar />}/>
             <Route path="/servicios" element={<Servicios/>}/>
             <Route path="/crearOrdenServicios" element={<CrearServicios/>}/>
+            {/* Esta ruta es provisional*/}
+            <Route path="/MisOrdenesServicio" element={<EstadoOS />}/>
           </Routes>
         </Router>
       </UserState>

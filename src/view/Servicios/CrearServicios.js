@@ -28,11 +28,11 @@ export const CrearServicios = () => {
 
     function createOS() {
         axios.post(url + "/crearServicio", {
-            empleado: 3,
+            empleado: 13,
             estado: "En tramite",
-            comentarios: "Asus rog x37",
-            costo: 4590300,
-            cliente: 2
+            comentarios: "Ps5 ",
+            costo: 3100000,
+            cliente: 5
         }).then((response) => {
             setFunc(response.data);
         })

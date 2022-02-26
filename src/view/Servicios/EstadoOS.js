@@ -7,7 +7,7 @@ import Navbar from '../componentes/Navbar';
 import BadgeServicio from './FooterServicios/BadgeServicio';
 import { FormControl, Button, Form, Row, Col, Modal, ModalBody, ModalFooter, Table, Pagination } from "react-bootstrap";
 
-const Servicios = () => {
+const EstadoOS = () => {
     
     const [dato, setData] = useState([]);
     const getData = async () => {
@@ -306,4 +306,4 @@ const Servicios = () => {
     );
 }
 
-export default Servicios;
+export default EstadoOS;
