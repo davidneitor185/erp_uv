@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import Paginas from "./Paginas";
 import "./Table/TablaSI.css";
 
@@ -12,14 +12,14 @@ const TableCell = ({ children, ...other }) => {
 };
 
 const TablePagination = ({ titulos, children, rowsPerPage, ornament }) => {
-  const count = Math.ceil(children.length / rowsPerPage);
+  const count = Math.ceil(children ? children.length / rowsPerPage : 0);
   const [page, setPage] = React.useState(0);
 
   return (
     <div
       style={{
-        margin: "5%",
-        padding: "5%",
+        margin: "35px 0",
+        padding: 35,
         border: "0.5px solid black",
         borderRadius: "45px",
       }}
@@ -28,39 +28,38 @@ const TablePagination = ({ titulos, children, rowsPerPage, ornament }) => {
         <Table striped bordered hover>
           <thead>
             <tr>
-              {titulos.map((titulo, index) => {
+              {titulos && titulos.map((titulo, index) => {
                 return <th key={index}>{titulo}</th>;
               })}
             </tr>
           </thead>
-          <tbody>
-            {rowsPerPage &&
+          {children && <tbody>
+            {rowsPerPage && children &&
               children.length > rowsPerPage ?
               children.slice(
                 page * rowsPerPage,
                 page * rowsPerPage + rowsPerPage
               ):children}
-          </tbody>
+          </tbody>}
         </Table>
         <div>
           {ornament && ornament}
         </div>
       </div>
-      <div
+      {children && <div
         style={{
           display: "flex",
           justifyContent: "space-around",
-          margin: 10,
           alignItems: "center",
           flexWrap: "wrap",
         }}
       >
         {rowsPerPage && children.length > rowsPerPage && (
           <>
-            <Paginas count={count} page={page} onChange={setPage} />
+            <Paginas count={count} page={page} onChange={setPage} style={{margiBottom: 0}} />
           </>
         )}
-      </div>
+      </div>}
     </div>
   );
 };
