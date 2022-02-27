@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-const notify = (suffix, identificacion = "", tipo) => {
+const notify = (suffix, identificacion = "", tipo = "") => {
   if (tipo === "info") {
     toast.info(`${suffix} ${identificacion}`, {
       position: "top-center",
