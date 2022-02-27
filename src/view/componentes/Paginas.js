@@ -17,7 +17,7 @@ const Paginas = ({count, page, onChange}) => {
 
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
+    <div style={{ display: "flex", justifyContent: "center"}}>
       <Pagination>
         <Pagination.First disabled={page === 0}  onClick={() => onChange(0)}/>
         <Pagination.Prev disabled={page === 0} onClick={() => onChange(page - 1)}/>
