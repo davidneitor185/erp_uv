@@ -11,10 +11,9 @@ import AnularCuentas from "../cuentas_por_pagar/AnularCuentas";
 import './Table/TablaSI.css';
 
 export const TablaSI = ({titulos, datos, tipo}) => {
-
   return (
     <div
-      classname = "tablaSi-content"
+      className = "tablaSi-content"
       style={ tipo === "cuentaxpdetalle" ? {
         display: "flex",
         flexDirection: "column",
@@ -63,20 +62,28 @@ export const TablaSI = ({titulos, datos, tipo}) => {
               }else if(tipo === "cuentasxpagar"){
                 return (
                   <tr>
-                    { dato.map((datico, index) => {
-                      return <td key={index}>{datico}</td>;
-                    })}
-                    <td>
-                      <AnularCuentas />
-                      <VerDetalleCuentas />
-                      <PagarCuenta />
-                      </td>
+                    { dato !== undefined && dato.length !== 0 && dato.map((datico, index) => {
+                      return<td key={index}>{datico}</td>;
+                      })
+                     }
+                     <td>
+                      { dato[3] !== "Anulado" && 
+                      <AnularCuentas
+                       id={dato[0]} />}
+                      <VerDetalleCuentas 
+                      info={dato[0]}
+                      recibo={dato[4]}
+                      estado={dato[3]} />
+                      <PagarCuenta 
+                      dato={dato[0]}
+                      total={dato[2]}/>
+                    </td> 
                   </tr>
                 );
               }else if(tipo === "cuentaxpdetalle"){
                 return (
                   <tr>
-                    { dato.map((datico, index) => {
+                    { dato.length !== 0 && dato.map((datico, index) => {
                       return <td key={index}>{datico}</td>;
                     })}
                   </tr>
@@ -87,7 +94,9 @@ export const TablaSI = ({titulos, datos, tipo}) => {
           </tbody>
         </Table>
       </div>
-      <Paginas />
+      {tipo !== "cuentasxpagar" && tipo !== "cuentaxpdetalle" &&
+        <Paginas />
+      }
     </div>
   );
 };

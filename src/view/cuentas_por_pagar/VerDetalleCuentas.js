@@ -1,37 +1,48 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import Modal from 'react-bootstrap/Modal';
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import useAxios from "../../useAxios";
 
-
-const VerDetalleCuentas = () =>{
-        const [fullscreen, setFullscreen] = useState(true);
+const VerDetalleCuentas = (info) =>{
         const [show, setShow] = useState(false);
-        const [item, setItem] = useState([
-          //Aquí va algo
-        ]);
+        const [item, setItem] = useState([]);
+        const [turn, setTurn] = useState([]);
     const tipo = "cuentaxpdetalle";
 
     const titulos = [
-        "No.", "Item", "Cantidad", "Costo", "Costo Total"
+        "ID", "Item", "Cantidad", "Costo", "Costo Total"
     ];
 
-    const items = [ ["177898", "31-01-2022", "$798.000", "Activo", "No Aplica"], 
-    ["177899", "31-01-2022", "$60.000", "Activo", "No Aplica"], ["algo"], ["algo"], ["algo"]];
-      
+    const full = useAxios(`/cuentaxpagarFull/${info.info}`);
+    const todo = full.data;
+
+
+    useEffect(()=>{
+      let tempo = [];
+      if(todo && turn === true){
+        todo.map((td) =>{
+          const costot = td.precio * td.cantidad;
+          const body = [
+            td.item,
+            td.nombreitem,
+            td.cantidad,
+            td.precio,
+            costot
+          ];
+            tempo.push(body);
+        });
+        setItem(tempo);
+      }
+    }, [todo, turn]);
+
         const setModal = (valor) => {
           setShow(valor);
+          setTurn(valor);
         };
-
-        const handleInputChange = (event) => {
-          setItem({
-              ...item,
-              [event.target.name]: event.target.value
-          });
-      };
       
         return (
           <>
@@ -73,26 +84,30 @@ const VerDetalleCuentas = () =>{
                         <Form.Group as={Row} className="mb-3" controlId="primera_linea" >
                           <Col>
                               <Form.Label>Orden de compra asociada</Form.Label>
-                              <Form.Control placeholder="Orden Compra" name="orden" onChange={handleInputChange}/>
+                              <Form.Control value={todo[0] !== undefined ? todo[0].ordencompra : 0} name="orden" disabled={true}/>
                           </Col>
                           <Col> 
                             <Form.Label>Proveedor</Form.Label>
-                            <Form.Control placeholder="Provedorcito" name="proveedor" onChange={handleInputChange}/>
+                            <Form.Control value={todo[0] !== undefined ? todo[0].proveedor : 0} name="proveedor" disabled={true}/>
                           </Col>
                           <Col>
                             <Form.Label>Fecha límite para pago</Form.Label>
-                            <Form.Control placeholder="Ingrese la fecha" name="fecha" onChange={handleInputChange}/>
+                            <Form.Control value={todo[0] !== undefined ? todo[0].tiempopago : 0} name="fecha" disabled={true}/>
                           </Col>
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "320px", maxHeight: "320px", marginTop:10 }}>
-                        <TablaSI titulos={titulos} datos={items} tipo={tipo} />
+                        <TablaSI titulos={titulos} datos={item} tipo={tipo} />
                       </div>
                       <Col>
                         <Form.Label>Estado</Form.Label>
-                        <Form.Control placeholder="?" name="estado" onChange={handleInputChange} />
+                        <Form.Control value={info.estado} name="estado" disabled={true}/>
                       </Col>
                       <Col>
                         <Form.Label>Número recibo de pago</Form.Label>
-                        <Form.Control placeholder="no." name="recibo" onChange={handleInputChange} />
+                        <Form.Control value={info.recibo} name="recibo" disabled={true}/>
+                      </Col>
+                      <Col>
+                        <Form.Label>Cobro total</Form.Label>
+                        <Form.Control  name="cobroT" value={todo[0] !== undefined ? todo[0].cobroto : 0} disabled={true} />
                       </Col>
                         </Form.Group>
                   </Form>
