@@ -27,10 +27,38 @@ class CuentasPorPagar extends React.Component {
                 cuentasCargadas:true,
                 cuentas:datosCuentas
              })
+             let rowsTemp = [];
+            console.log("esto es datosCuentas", datosCuentas)
+            const {item} = this.state
+            datosCuentas.map((element) =>{
+                if(element.idrecibo !== null){
+                    const body = [
+                        element.idcuentaxp,
+                        element.tiempopago,
+                        element.cobroto,
+                        element.estado,
+                        element.idrecibo
+                       ];
+                       rowsTemp.push(body);
+                } else {
+                    const body = [
+                        element.idcuentaxp,
+                        element.tiempopago,
+                        element.cobroto,
+                        element.estado,
+                       "No aplica"
+                        ]; 
+                    rowsTemp.push(body);
+                }
+            })
+            this.setState({ 
+                item:rowsTemp,
+                inicio:"end"
+            })
         })
-        .catch(console.log)
-
-        fetch("http://localhost:5000/recibos_pago/todos")
+        .catch(console.log);
+    }
+        /*fetch("http://localhost:5000/recibos_pago/todos")
         .then(resp=>resp.json())
         .then((datosRecibos)=>{
             this.setState({
@@ -88,24 +116,15 @@ class CuentasPorPagar extends React.Component {
                                 
                         }
                     };
-                }
-                this.setState({
-                    item:rowsTemp,
-                    inicio:"end"
-                })
-            } else if(item.length !== 0){
-                this.setState({item:[]})
-            }              
-        })
-        .catch(console.log)
-    }
+                }*/
+      
 
     componentDidMount(){
         this.cargarDatos();
     }
 
     render(){ 
-        const {cuentas, recibos, item, inicio} = this.state
+        const { item, inicio} = this.state
         const roluser = JSON.parse(window.localStorage.getItem('user')).id_rol;
         const titulos = [
             "Identificación",
@@ -116,16 +135,7 @@ class CuentasPorPagar extends React.Component {
             "Opciones",
         ];
         const tipo = "cuentasxpagar"; 
-       
-        let finalit = [];
-        let dat = 0;
-        item.map((ite, index) =>{
-            if(dat !== ite[0]){
-                finalit.push(ite);
-            }
-            dat = ite[0];
-        })
-        
+      
 
         if(item !== undefined){  
             return ( 
@@ -151,7 +161,7 @@ class CuentasPorPagar extends React.Component {
                                { roluser === 5 && <Link className="btn btn-secondary" to={"/cuentasporpagar/crear"}>➕</Link>}
                             </Col>
                             <div style={{ display:"flex", justifyContent:"center", height: "290px" }}>
-                                { inicio === "end" ? <TablaSI titulos={titulos} datos={finalit} tipo={tipo} /> :
+                                { inicio === "end" ? <TablaSI titulos={titulos} datos={item} tipo={tipo} /> :
                                 <div>...cargando</div>}
                             </div>
                         </Form.Group>
