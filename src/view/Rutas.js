@@ -9,6 +9,8 @@ import CuentasPorPagar from "./cuentas_por_pagar/CuentasPorPagar";
 import Servicios from "./Servicios/Servicios";
 import { CrearServicios } from "./Servicios/CrearServicios";
 import { TablaBarata } from "./Servicios/TablaBarata";
+import { Nomina } from "./Rrhh/Nomina";
+import { CrearNomina } from "./Rrhh/CrearNomina";
 
 
 
@@ -27,6 +29,8 @@ function Rutas() {
             <Route path="/crearOrdenServicios" element={<CrearServicios/>}/>
             {/* Esta ruta es provisional*/}
             <Route path="/MisOrdenesServicio" element={<EstadoOS />}/>
+            <Route path="/recursoshumanos" element={<Nomina />} />
+            <Route path="/crear_nomina" element={<CrearNomina />} />
           </Routes>
         </Router>
       </UserState>
