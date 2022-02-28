@@ -13,6 +13,7 @@ const Navbar = () => {
       <Nav.Item>
         <Link to={"/cuentasporpagar"} className='link'>Cuentas Por Pagar</Link>
       </Nav.Item>
+
       <Nav.Item>
         <Link to={"/cuentasporcobrar"} className='link'>Cuentas Por Cobrar</Link>
       </Nav.Item>

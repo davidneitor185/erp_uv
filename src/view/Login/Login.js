@@ -85,7 +85,7 @@ const Login = () => {
                         <Form.Check type="checkbox" label="Recuérdame" />
                     </div>
                     <div className="col">
-                        <Alert.Link href="#">Olvidó su contraseña</Alert.Link>
+                        <Alert.Link to="#">Olvidó su contraseña</Alert.Link>
                     </div>
                 </div>
                 <Button className="btn_iniciar" variant="primary" type="button" onClick={() => logearse()}>
