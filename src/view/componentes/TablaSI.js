@@ -94,6 +94,20 @@ export const TablaSI = ({titulos, datos, tipo}) => {
                     })}
                   </tr>
                 );
+              }else if(tipo === "servicios"){
+                return (
+                  <tr>
+                    {dato.map((iterateDato, index) => {
+                      return <td key={index}>{iterateDato}</td>
+                    })}
+                    <td>
+                      <div className="btn-group" role="group" aria-label="">
+                        <button type="button" className="btn btn-warning">Editar</button>
+                        <button type="button" className="btn btn-danger">Borrar</button>
+                      </div>
+                    </td>
+                  </tr>
+                );
               }
               
             })}
