@@ -146,15 +146,16 @@ class CuentasPorPagar extends React.Component {
                 </div>
                 <div style={{ alignItems: "center",width:"100%"}}>
                     <Form className="form rounded p-4 p-sm-3">
-                        <Form.Group as={Row} style={{ justifyContent: "center", }}>
+                        <Form.Group as={Row} style={{ justifyContent: "center"}}>
                             <Col sm="3">
                                 <FormControl
                                     placeholder="🔍   Search..."
                                     aria-label="Identificación"
                                     aria-describedby="basic-addon1"
+                                    style={{marginLeft:"14%"}}
                                 />
                             </Col>
-                            <Col sm="1" style={{ width: "5%" }}>
+                            <Col sm="1" style={{ width: "5%", marginLeft: "3%", }}>
                                 <Button variant="secondary">🔍</Button>
                             </Col>
                             <Col sm="1">
