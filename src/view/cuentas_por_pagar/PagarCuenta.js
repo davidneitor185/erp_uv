@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TablaSI } from "../componentes/TablaSI";
 import Modal from 'react-bootstrap/Modal'
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
@@ -17,22 +17,25 @@ const PagarCuenta = (datos) =>{
         const [errores, setErrores] = useState({
           select: false
         });
-        const [cuentac, setCuentac] = useState({
-          cuentas: 0
-        });
+        
         let notificacion = 0;
       
         const rec = useAxios(`/recibos_pago/todos`);
         const recibos = rec.data;
-      
-        const cc = useAxios(`/cuenta_contable/todos`);
-        const cntac = cc.data;
+
+        const cuentaco = useAxios(`/datosmaestros_join_terceros`);
+        const cntac = cuentaco.data;       
+
+        const [cuentac, setCuentac] = useState({
+          cuentas: 0
+        })
 
         const setModal = (valor) => {
           setShow(valor);
           if(valor){
             if(recibos.length !== 0){
               setRecibito(recibos[recibos.length-1].idrecibo + 1);
+              setCuentac({cuentas:cntac[0].idcuentactle})
               console.log("cuenta_contable", cntac);
             }
           }
@@ -52,10 +55,12 @@ const PagarCuenta = (datos) =>{
           cuentacontable: cuentac.cuentas
         }
         const url = "http://localhost:5000";
+        console.log("esto es recibo", body);
         try {
             const response = await axios.post(url + `/recibos_pago/nuevo`, body);
             const datos = response.data;
-            if (datos !== "" && datos !== null){
+            
+            if (datos.length === 0){
                 return true;
                 } else {
                   return false;
@@ -68,44 +73,79 @@ const PagarCuenta = (datos) =>{
       const putCc = async () =>{
         const url = "http://localhost:5000";
         let monto = 0;
-        cntac.map((elemento) =>{
-          if(elemento.idcuentactle == cuentac.cuentas){
-            monto = elemento.montototal
+        console.log("esto es cntac[0]", cntac[0].idcuentactle)
+          if(cntac[0].idcuentactle === cuentac.cuentas){
+            monto = cntac[0].montototal
+            const body = {
+              idcuentactle: cuentac.cuentas,
+              montototal: monto - datos.total
+            };
+            console.log("esto es cc", body);
+            try {
+              const response = await axios.put(url + `/cuenta_contable/modifica`, body);
+              const datos = response.data;
+              
+              if (datos.length === 0){
+                return true;
+                } else {
+                  return false;
+              }
+            } catch (error) {
+              console.error(error);
+            }
           }
-        });
+        
+      };
+
+      const putCuentaxp = async() =>{
+        const url = "http://localhost:5000";
         const body = {
-          idcuentactle: cuentac.cuentas,
-          montototal: monto - datos.total
+          idcuentaxp: datos.dato,
+          cobroto: 0
         };
+        console.log("esto es cuentaxp", body);
         try {
-          const response = await axios.put(url + `/cuenta_contable/modifica`, body);
+          const response = await axios.put(url + `/cuentaxpagar/update`, body);
           const datos = response.data;
-          if (datos !== "" && datos !== null){
+          
+          if (datos.length === 0){
             return true;
             } else {
               return false;
-        }
+            }
         } catch (error) {
-          console.error(error);
+          console.log(error);
         }
+        
       };
 
       const guardar = () =>{
-        if(cuentac.cuentas !== 0){
+        console.log("esto es cuentac", cuentac)
+        if(cntac[0].montototal > datos.total){
           setErrores({
             select: false
           });
           const cuenta_con = putCc();
-          if(cuenta_con !== undefined && cuenta_con !== ""){
-            console.log("pasó el post de cc")
+          if (cuenta_con) {
             const recbo = postRecibo();
-            if(recbo !== undefined && recbo !== ""){
-              notify("Se ha realizado el pago exitosamente", "", "info");
+            if (recbo) {
+              const cero = putCuentaxp();
+              if (cero) {
+                notify("Se ha realizado el pago exitosamente", "", "info");
+              } else {
+                notify("Ha ocurrido un error, por favor recargue la página", "", "error");
+                console.log("Error en putcuentaxp");
+              }
+
+            } else {
+              notify("Ha ocurrido un error, por favor recargue la página", "", "error");
+              console.log("error en recibo")
             }
-          }else{
+          } else {
             notify("Ha ocurrido un error, por favor recargue la página", "", "error");
+            console.log("error en cuentacontable")
           }
-        }else if(cuentac.cuentas === 0){
+        } else if (cntac[0].montototal < datos.total) {
           setErrores({
             select: true
           });
@@ -156,17 +196,15 @@ const PagarCuenta = (datos) =>{
                           </Col>
                           <Col>
                           <Form.Label>Cuentas de la empresa</Form.Label>
-                            <Form.Select name="cuentas" onChange={handleInputChange}>
-                            <option value={0}>Cuentas</option>
-                                {cntac.length !== 0 && cntac.map((elemento) => (
+                            <Form.Select name="cuentas" onChange={handleInputChange} disabled>
+                            {cntac.length !== 0 && cntac.map((elemento) => (
                                     <option key={elemento.idcuentactle} value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
-                                    
                                 ))}
                             </Form.Select>
                             {errores && errores.select &&
                                 <span className="span text-danger text-small d-block">
-                                    Seleccione una cuenta contable
-                                </span>}
+                                    No existen fondos suficientes
+                            </span>}
                           </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="saldo" >

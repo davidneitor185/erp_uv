@@ -15,7 +15,8 @@ class CuentasPorPagar extends React.Component {
         itemCargado: false,
         cuentas:[],
         recibos:[],
-        item:[]
+        item:[],
+        inicio:"fine"
      }
 
     cargarDatos = async() =>{
@@ -36,7 +37,7 @@ class CuentasPorPagar extends React.Component {
                 recibosCargados:true,
                 recibos:datosRecibos
             })
-            const {cuentas, item, cuentasCargadas, recibosCargados} = this.state
+            const {cuentas, item, cuentasCargadas, recibosCargados, inicio} = this.state
             if(item.length === 0 && cuentasCargadas && recibosCargados){
                 let rowsTemp = [];
                 let x = 0;
@@ -89,7 +90,8 @@ class CuentasPorPagar extends React.Component {
                     };
                 }
                 this.setState({
-                    item:rowsTemp
+                    item:rowsTemp,
+                    inicio:"end"
                 })
             } else if(item.length !== 0){
                 this.setState({item:[]})
@@ -103,7 +105,8 @@ class CuentasPorPagar extends React.Component {
     }
 
     render(){ 
-        const {cuentas, recibos, item} = this.state
+        const {cuentas, recibos, item, inicio} = this.state
+        const roluser = JSON.parse(window.localStorage.getItem('user')).id_rol;
         const titulos = [
             "Identificación",
             "Fecha Límite",
@@ -124,7 +127,7 @@ class CuentasPorPagar extends React.Component {
         })
         
 
-        if(item !== undefined){
+        if(item !== undefined){  
             return ( 
                 <div className="ppal-content" style={{ display: "flex", flexDirection: "column", alignItems:"center" }}>
                 <Navbar/>
@@ -145,10 +148,11 @@ class CuentasPorPagar extends React.Component {
                                 <Button variant="secondary">🔍</Button>
                             </Col>
                             <Col sm="1">
-                                <Link className="btn btn-secondary" to={"/cuentasporpagar/crear"}>➕</Link>
+                               { roluser === 5 && <Link className="btn btn-secondary" to={"/cuentasporpagar/crear"}>➕</Link>}
                             </Col>
                             <div style={{ display:"flex", justifyContent:"center", height: "290px" }}>
-                                { <TablaSI titulos={titulos} datos={finalit} tipo={tipo} />}
+                                { inicio === "end" ? <TablaSI titulos={titulos} datos={finalit} tipo={tipo} /> :
+                                <div>...cargando</div>}
                             </div>
                         </Form.Group>
                     </Form>

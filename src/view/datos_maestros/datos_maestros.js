@@ -8,7 +8,7 @@ import { notify } from "../componentes/notify/Notify";
 import axios from "axios";
 
 const DatosMaestros = () =>{
-
+    const roluser = JSON.parse(window.localStorage.getItem('user')).id_rol;
     const [datos, setDatos] = useState({
         pagot:0,
         recp: 0,
@@ -134,7 +134,7 @@ const DatosMaestros = () =>{
                     <Form.Group className="mb-3" controlId="recibo" >
                       <Col style={{ padding:"1%"}}>
                       <Form.Label>Pagos a terceros</Form.Label>
-                        <Form.Select name="pagot" onChange={handleInputChange}>
+                        <Form.Select name="pagot" onChange={handleInputChange} disabled={roluser !== 10 && true}>
                         <option value={0}>Cuentas</option>
                             {cntac.length !== 0 && cntac.map((elemento) => (
                                 <option key={elemento.idcuentactle} value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
@@ -148,7 +148,7 @@ const DatosMaestros = () =>{
                       </Col>
                       <Col style={{ padding:"1%"}}>
                       <Form.Label>Recepción de pagos</Form.Label>
-                        <Form.Select name="recp" onChange={handleInputChange}>
+                        <Form.Select name="recp" onChange={handleInputChange} disabled={roluser !== 10 && true}>
                         <option value={0}>Cuentas</option>
                             {cntac.length !== 0 && cntac.map((elemento) => (
                                 <option key={elemento.idcuentactle} value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
@@ -162,7 +162,7 @@ const DatosMaestros = () =>{
                       </Col>
                       <Col style={{ padding:"1%"}}>
                       <Form.Label>Pagos de nomina</Form.Label>
-                        <Form.Select name="pagon" onChange={handleInputChange}>
+                        <Form.Select name="pagon" onChange={handleInputChange} disabled={roluser !== 10 && true}>
                         <option value={0}>Cuentas</option>
                             {cntac.length !== 0 && cntac.map((elemento) => (
                                 <option key={elemento.idcuentactle} value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
@@ -176,7 +176,7 @@ const DatosMaestros = () =>{
                       </Col>
                       <Col style={{ padding:"1%"}}>
                           <Form.Label>Vencimiento cuentas por cobrar</Form.Label>
-                          <Form.Control name="dias" onChange={handleInputChange}/>
+                          <Form.Control name="dias" onChange={handleInputChange} disabled={roluser !== 10 && true}/>
                           <Form.Text className="text-muted">
                             En días
                           </Form.Text>
@@ -197,7 +197,7 @@ const DatosMaestros = () =>{
               <Form >
               <Form.Group as={Row} className="mb-3" controlId="administra" >
                           <Col style={{ marginLeft:"50px"}}>
-                            <Button variant="warning" style={{ marginTop: "30px"}} onClick = {() => guardar()}>Guardar</Button>
+                           <Button variant="warning" style={{ marginTop: "30px"}} onClick = {() => guardar()} disabled={roluser !== 10 && true}>Guardar</Button>
                           </Col>
                         </Form.Group>
               </Form>

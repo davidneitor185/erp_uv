@@ -10,7 +10,9 @@ import PagarCuenta from "../cuentas_por_pagar/PagarCuenta";
 import AnularCuentas from "../cuentas_por_pagar/AnularCuentas";
 import './Table/TablaSI.css';
 
+
 export const TablaSI = ({titulos, datos, tipo}) => {
+  const roluser = JSON.parse(window.localStorage.getItem('user')).id_rol;
   return (
     <div
       className = "tablaSi-content"
@@ -60,6 +62,7 @@ export const TablaSI = ({titulos, datos, tipo}) => {
                   </tr>
                 );
               }else if(tipo === "cuentasxpagar"){
+                
                 return (
                   <tr>
                     { dato !== undefined && dato.length !== 0 && dato.map((datico, index) => {
@@ -67,16 +70,19 @@ export const TablaSI = ({titulos, datos, tipo}) => {
                       })
                      }
                      <td>
-                      { dato[3] !== "Anulado" && 
+                      { roluser === 7 && dato[3] !== "Anulado" && 
                       <AnularCuentas
                        id={dato[0]} />}
+
                       <VerDetalleCuentas 
                       info={dato[0]}
                       recibo={dato[4]}
                       estado={dato[3]} />
-                      <PagarCuenta 
+
+                      {roluser === 6 && dato[4] === "No aplica" &&
+                       <PagarCuenta 
                       dato={dato[0]}
-                      total={dato[2]}/>
+                      total={dato[2]}/> }
                     </td> 
                   </tr>
                 );

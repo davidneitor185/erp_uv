@@ -51,7 +51,7 @@ const CrearCuentasxPagar = () => {
    //Lista de proveedores. Select02
    const listProv = useAxios("/proveedor/todos");
    const prov = listProv.data;
-   
+  
 
     const handleInputChange = (event) => {
         setDatos({
