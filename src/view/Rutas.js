@@ -27,11 +27,13 @@ function Rutas() {
             <Route path="/cuentasporpagar" element={<CuentasPorPagar />}/>
             <Route path="/cuentasporcobrar" element={<CuentasPorCobrar />}/>
             <Route path="/cuentasporcobrar/crear" element={<CrearCuentaPorCobrar />}/>
+            <Route path="/cuentasporcobrar/detalles/:id_cuentaxc" element= {<CrearCuentaPorCobrar />}/>
             <Route path="/rolesperfiles" element={<RolesPerfiles />}/>
             <Route path="/rolesperfiles/rol" element={<RolesPerfiles_rol />}/>
             <Route path="/rolesperfiles/crear" element={<CrearUsuario />}/>
             <Route path="/rolesperfiles/modificar/:id_funcionario" element={<CrearUsuario />}/>
             <Route path="/rolesperfiles/rol/crear" element={<CrearRol />}/>
+            
           </Routes>
         </Router>
       </UserState>

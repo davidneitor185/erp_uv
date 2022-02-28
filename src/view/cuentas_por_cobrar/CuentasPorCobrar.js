@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import Navbar from "../componentes/Navbar";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { TablaSI } from "../componentes/TablaSI";
 import useAxios from "../../useAxios";
+import {
+  TablePagination,
+  TableRow,
+  TableCell,
+} from "../componentes/TablaPagination";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import { FaWindowClose, FaSearch } from "react-icons/fa";
 
 const CuentasPorCobrar = () => {
   const titulos = [
@@ -14,10 +21,14 @@ const CuentasPorCobrar = () => {
     "Recibo",
     "Opciones",
   ];
-  const [datos, setDatos] = useState([]);
-  const { data } = useAxios("/solicitudes");
-  const tipo = "solicitudes";
 
+  const formatDate = (date)=>{
+    let formatted_date = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
+     return formatted_date;
+    }
+
+  const { data: cuentascobrar } = useAxios("/cuentasxcobrar");
+  console.log(cuentascobrar);
   return (
     <>
       <Navbar />
@@ -43,14 +54,59 @@ const CuentasPorCobrar = () => {
                 className="btn btn-secondary"
                 to={"/cuentasporcobrar/crear"}
               >
-                Crear
+                ➕
               </Link>
             </Col>
           </Form.Group>
         </Form>
       </div>
       <div style={{ justifyContent: "center", margin: "0 250px" }}>
-        <TablaSI titulos={titulos} datos={datos} tipo={tipo} />
+      <TablePagination
+          titulos={titulos}
+          /*CUANTOS POR PAG*/
+          rowsPerPage={5}
+        >
+          {cuentascobrar &&
+            cuentascobrar.map((cuentita) => {
+              return (
+                <TableRow>
+                  <TableCell key={1}>{cuentita.id_cuentaxc}</TableCell>
+                  <TableCell key={2}>{formatDate(new Date(cuentita.fecha_limite))}</TableCell>
+                  <TableCell key={3}>$ {cuentita.costototal}</TableCell>
+                  <TableCell key={4}>{cuentita.estado_cxc}</TableCell>
+                  <TableCell key={5}>{cuentita.recibo}</TableCell>
+                  <TableCell>
+                    <OverlayTrigger
+                      delay={{ hide: 450, show: 180 }}
+                      overlay={(props) => (
+                        <Tooltip {...props}>Anular</Tooltip>
+                      )}
+                      placement="bottom"
+                    ><Link to={"..."}>
+                      <FaWindowClose
+                        style={{
+                          fontSize: 25,
+                          color: "black",
+                          marginRight: 10,
+                        }}
+                      /></Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                    delay={{ hide: 450, show: 180 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>Ver Detalles</Tooltip>
+                    )}
+                    placement="bottom"
+                    >
+                    <Link to={`/cuentasporcobrar/detalles/${cuentita.id_cuentaxc}`}>
+                      <FaSearch style={{ fontSize: 25, color: "black" }} />
+                    </Link>
+                    </OverlayTrigger>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+        </TablePagination>
       </div>
     </>
   );
