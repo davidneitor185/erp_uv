@@ -21,13 +21,19 @@ export const Nomina = () => {
 
     const [dato, setDato] = useState([]);
     const [cuentaBancaria, setCuentaBancaria] = useState([]);
+    const [selectNomina, setNomina] = useState("");
     const [viewCanva, setViewCanva] = useState(false);
+    const [viewModalDelete, setModalDelete] = useState(false);
     const [viewModalPay, setModalPay] = useState(false);
     const [consulta, setConsulta] = useState("");
     const [date, setDate] = useState("");
     const [banco, setBanco] = useState(0);
     const [btnSave, setBtnSave] = useState(true);
-    const [view_obj, setViewObj] = useState({});
+    const [view_obj, setViewObj] = useState({
+        idnomina: "",
+        nombre_funcionario: "",
+        fechadepago: "",
+    });
     const links = [
         "http://localhost:5000/nominas",
         "http://localhost:5000/cuentaContable"
@@ -62,6 +68,17 @@ export const Nomina = () => {
         );
     };
 
+    const deleteNomina = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5000/deleteNomina/${id}`).then(res => {
+                console.log("la mierdaaaa sirvio");
+                getData();
+            });
+        }catch(error) {
+            console.log(error);
+        };
+    };
+
     const postPagoNomina = async (body) => {
         try {
             const res = await axios.post("http://localhost:5000/pagarNomina", body).then(res => {
@@ -84,6 +101,12 @@ export const Nomina = () => {
         }
         else
             console.log("No has ingresado todos los datos");
+    };
+
+    //Funcion substring 
+    const sub_string = (str, init, end) => {
+        if(str != undefined)
+            return str.subString(init, end);
     }
 
     //Columnas de la tabla:
@@ -114,8 +137,8 @@ export const Nomina = () => {
                 <div className="btn-group" role="group" aria-label="">
                     <button type="button" onClick={() => {setViewObj(cell.row.original); setViewCanva(true)}} className="btn btn-outline-warning"><GrView /></button>
                     {/* cell.row.objects para traerlos datos */}
-                    <button  className="btn btn-outline-danger" onClick={() => console.log(cell.row.original)}><AiFillDelete /></button>
-                    <button type="button"  onClick={() => {setModalPay(true); setConsulta(cell.row.values.idnomina)}} className="btn btn-outline-success"><MdOutlinePayments /></button>
+                    <button  className="btn btn-outline-danger" onClick={() => {setNomina(cell.row.values.idnomina);setModalDelete(true)}}><AiFillDelete /></button>
+                    <button type="button"  onClick={() => {setConsulta(cell.row.values.idnomina);setModalPay(true)}} className="btn btn-outline-success"><MdOutlinePayments /></button>
                 </div>
             ),
         }
@@ -235,13 +258,14 @@ export const Nomina = () => {
                         <CardHeader
                             avatar={
                             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                                {view_obj.nombre_funcionario.substring(0, 1)}
+                                {view_obj.nombre_funcionario.substring(0,1)}
                             </Avatar>
                             }
                             title={view_obj.nombre_funcionario}
                             subheader={view_obj.fechadepago.substring(0, 9)}
+                            style={{backgroundImage: "linear-gradient(rgb(254, 102, 125), rgb(255, 163, 117))", color: "#424242"}}
                         />
-                        <CardContent>
+                        <CardContent style={{backgroundImage: "linear-gradient( 109.6deg, rgba(242,241,242,0.68) 44.1%, rgba(187,211,245,1) 91.1% )"}}>
                             <Typography gutterBottom variant="h6" component="div">
                                 No. Nomina:
                             </Typography>
@@ -270,12 +294,26 @@ export const Nomina = () => {
                                 Total Deducciones:
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                            {'$' + view_obj.totaldeducciones}
+                                {'$' + view_obj.totaldeducciones}
                             </Typography>
                         </CardContent>
                     </Card>
                 </Offcanvas.Body>
             </Offcanvas>
+
+            {/* Borrar nomina */}
+            <Modal show={viewModalDelete} onHide={() => setModalDelete(false)}>
+                <Modal.Header style={{backgroundColor: "crimson"}}>
+                    <Modal.Title>Eliminar Nomina</Modal.Title>
+                </Modal.Header>
+                <ModalBody>
+                    ¿Estás seguro que deseas eliminar la Nomina: {selectNomina} y todos sus registros asociados?
+                </ModalBody>
+                <ModalFooter>
+                    <button className="btn btn-danger" onClick={() => {deleteNomina(selectNomina); setModalDelete(false)}}>Sí</button>
+                    <button className="btn btn-secundary" onClick={()=>setModalDelete(false)}>No</button>
+                </ModalFooter>
+            </Modal>
 
             {/* Realizar pago de la nomina */}
             <Modal show={viewModalPay} onHide={() => setModalPay(false)}>

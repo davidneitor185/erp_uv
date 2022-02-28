@@ -6,24 +6,28 @@ import axios from "axios";
 
 export const CrearServicios = () => {
 
-    const url = "http://localhost:5000";
-    const[data, setData] = useState(null);
-    const[func, setFunc] = useState(null);
+    const[data, setData] = useState([]);
+    const[func, setFunc] = useState([]);
 
-    function getClientes() {
-        return axios.get(url + "/IDclientes");
-    }
-    function getFuncionarios() {
-        return axios.get(url + "/funcionarios");
+    const links = [
+        "http://localhost:5000/IDclientes",
+        "http://localhost:5000/funcionarios"
+    ];
+
+    const getData = async () => {
+        try {
+            await axios.all(links.map(promise => axios.get(promise))).then(
+                axios.spread((cli, func) => {
+                    
+                })
+            )
+        }catch(e) {
+            console.log(e);
+        }
     }
 
     useEffect(() => {
-        axios.get(url + "/IDclientes").then((response) => {
-            setData(response.data);
-        });
-        /*axios.all([getClientes()]).then((cliente) => {
-            setData(cliente.data);
-        }).catch(e => console.log(e));*/
+        
     }, []);
 
     function createOS() {

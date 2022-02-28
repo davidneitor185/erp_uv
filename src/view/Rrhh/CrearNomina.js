@@ -9,9 +9,14 @@ export const CrearNomina = () => {
 
   const [funcionarios, setFuncionarios] = useState([]);
   const [selectFunc, setSelectFunc] = useState([]);
-  const [date, setDate] = useState("");
+  const [submitBtn, setSubmitBtn] = useState(true);
+  const [addBtn, setAddBtn] = useState(true);
+  const [option, setOption] = useState('');
+  const [value, setValue] = useState(0);
+  const [id, setId] = useState('')
+  const [date, setDate] = useState('');
   const [devengado, setDevengado] = useState(0);
-  const
+  const [deduccion, setDeduccion] = useState(0);
   const [name, setName] = useState("");
 
   const getData = async () => {
@@ -24,7 +29,7 @@ export const CrearNomina = () => {
   const createNomina = async (body) => {
     try {
       await axios.post("http://localhost:5000/addNomina", body).then(res => {
-        console.log("new nomina");
+        console.log(body);
       });
     }catch(error) {
       console.log(error);
@@ -32,7 +37,33 @@ export const CrearNomina = () => {
   }
 
   const formAddNomina = () => {
+    const body_form = {
+      idnomina: cadenaAleatoria(aleatorio(1, 999)),
+      funcionario: id,
+      fechadepago: date,
+      totaldevengos: devengado,
+      totaldeducciones: deduccion,
+      pagototal: (devengado - deduccion),
+    };
+    if(id != 0 && date != '' && devengado != 0)
+      createNomina(body_form);
+    else
+      console.log("Datos erroneos");
+      //console.log(body);
+  };
 
+  const addValue = () => {
+    switch(option) {
+      case 'devengado':
+        setDevengado(value);
+        break;
+      case 'deduccion':
+        setDeduccion(value);
+        console.log(value);
+        break;
+      default:
+        console.log("please select a option");
+    }
   }
 
   const printSelect = async (target) => {
@@ -45,6 +76,22 @@ export const CrearNomina = () => {
     //setName(search.nombre_funcionario);
     setSelectFunc(search);
   };
+
+  //Crear una clase para estas funciones
+  const cadenaAleatoria = (num) => {
+    const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result1= Math.random().toString(36).substring(2,num);       
+
+    return result1;
+  };
+
+  const aleatorio = (inferior, superior) => {
+      var numPosibilidades = superior - inferior;
+      var aleatorio = Math.random() * (numPosibilidades + 1);
+      aleatorio = Math.floor(aleatorio);
+      return inferior + aleatorio;
+  };
+  //**************************************************************************************** */
 
   useEffect(() => {
     getData();
@@ -83,7 +130,7 @@ export const CrearNomina = () => {
                           <Row className='mb-3'>
                             <Form.Group as={Col}>
                               <Form.Label htmlFor="disabledTextInput">Id empleado</Form.Label>
-                              <Form.Select id="disabledSelect" onChange={(e) => printSelect(e.target.value)}>
+                              <Form.Select id="disabledSelect" onChange={(e) => {printSelect(e.target.value); setId(e.target.value); setSubmitBtn(false)}}>
                                 <option value='0'>Select Id </option>
                                 {funcionarios.map((func, index) => {
                                   return(
@@ -127,7 +174,7 @@ export const CrearNomina = () => {
                               <Form.Control id="disabledTextInput" placeholder={selectFunc.jefe_inmediato} disabled/>
                             </Form.Group>
                           </Row>
-                          <Button type="button" onClick={() => console.log(date)}>Submit</Button>
+                          <Button type="button" disabled={submitBtn} onClick={() => formAddNomina()}>Submit</Button>
                         </Form>
                       </div>
                       <div style={{position: "absolut", width: "530px", height: "529px", left: "550px", position: "initial", padding: "20px",
@@ -140,7 +187,7 @@ export const CrearNomina = () => {
                             </Form.Group>
                             <Form.Group as={Col}>
                               <Form.Label htmlFor="disabledSelect">Valor</Form.Label>
-                              <Form.Control id="disabledTextInput" placeholder={"Select Value"} />
+                              <Form.Control id="disabledTextInput" placeholder={"Select Value"} onChange={(e) => setValue(e.target.value)}/>
                             </Form.Group>
                           </Row>
 
@@ -154,7 +201,7 @@ export const CrearNomina = () => {
                                     name="group1"
                                     type={type}
                                     id={`inline-${type}-1`}
-                                    onClick={() => console.log("Devengado")}
+                                    onClick={() => {setOption('devengado'); setAddBtn(false)}}
                                   />
                                   <Form.Check
                                     inline
@@ -162,12 +209,12 @@ export const CrearNomina = () => {
                                     name="group1"
                                     type={type}
                                     id={`inline-${type}-2`}
-                                    onClick={() => console.log("Deducciones")}
+                                    onClick={() => {setOption('deduccion'); setAddBtn(false)}}
                                   />
                                 </div>
                               ))}
 
-                            <Button color='black'>add</Button>
+                            <Button color='black' disabled={addBtn} onClick={() => addValue()}>add</Button>
                         </Form>
                       </div>
                 </div>
