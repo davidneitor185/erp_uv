@@ -45,9 +45,7 @@ const Login = () => {
             notify("logeado");
             dispatch({ type: 'LOGIN', payload: ususario[0] });
             history("/principal");
-
         }
-
     }
 
     const getUsuario = async (body) => {
@@ -56,6 +54,7 @@ const Login = () => {
             //setUser(response.data);
             return response.data;
         } catch (error) {
+            console.log("error al ingresar");
         }
     };
 

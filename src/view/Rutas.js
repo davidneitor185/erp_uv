@@ -7,6 +7,8 @@ import Ordenes_compra from './ordenes_compra/ordenes_compra';
 import CuentasPorPagar from "./cuentas_por_pagar/CuentasPorPagar";
 import CrearCuentasxPagar from "./cuentas_por_pagar/CrearCuentasxPagar";
 import DatosMaestros from "./datos_maestros/datos_maestros";
+import Servicios from "./Servicios/Servicios";
+import { CrearServicios } from "./Servicios/CrearServicios";
 
 
 
@@ -23,6 +25,8 @@ function Rutas() {
             <Route path="/cuentasporpagar" element={<CuentasPorPagar />}/>
             <Route path="/cuentasporpagar/crear" element={<CrearCuentasxPagar />}/>
             <Route path="/datosmaestros" element={<DatosMaestros/>}/>
+            <Route path="/servicios" element={<Servicios/>}/>
+            <Route path="/crearOrdenServicios" element={<CrearServicios/>}/>
           </Routes>
         </Router>
       </UserState>
