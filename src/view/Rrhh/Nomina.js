@@ -10,6 +10,13 @@ import {GrView} from "react-icons/gr";
 import { FormControl, Button, Form, Row, Col, Modal, ModalBody, ModalFooter, Table, Pagination, Offcanvas } from "react-bootstrap";
 import { Test } from './Test';
 
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Avatar from '@mui/material/Avatar';
+import CardHeader from '@mui/material/CardHeader';
+import { red } from '@mui/material/colors';
+
 export const Nomina = () => {
 
     const [dato, setDato] = useState([]);
@@ -20,6 +27,7 @@ export const Nomina = () => {
     const [date, setDate] = useState("");
     const [banco, setBanco] = useState(0);
     const [btnSave, setBtnSave] = useState(true);
+    const [view_obj, setViewObj] = useState({});
     const links = [
         "http://localhost:5000/nominas",
         "http://localhost:5000/cuentaContable"
@@ -104,8 +112,9 @@ export const Nomina = () => {
             Header: 'Opciones',
             Cell: ({cell}) => (
                 <div className="btn-group" role="group" aria-label="">
-                    <button type="button" onClick={() => {setViewCanva(true)}} className="btn btn-outline-warning"><GrView /></button>
-                    <button  className="btn btn-outline-danger"><AiFillDelete /></button>
+                    <button type="button" onClick={() => {setViewObj(cell.row.original); setViewCanva(true)}} className="btn btn-outline-warning"><GrView /></button>
+                    {/* cell.row.objects para traerlos datos */}
+                    <button  className="btn btn-outline-danger" onClick={() => console.log(cell.row.original)}><AiFillDelete /></button>
                     <button type="button"  onClick={() => {setModalPay(true); setConsulta(cell.row.values.idnomina)}} className="btn btn-outline-success"><MdOutlinePayments /></button>
                 </div>
             ),
@@ -219,13 +228,52 @@ export const Nomina = () => {
             {/* Canva de vista */}
             <Offcanvas show={viewCanva} onHide={() => setViewCanva(false)} placement='end'>
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+                    <Offcanvas.Title>Información Nomina</Offcanvas.Title>
                 </Offcanvas.Header>
                 <Offcanvas.Body>
-                    <div>
-                        {/*<Test data={xd}/>*/}
-                        para definir
-                    </div>
+                    <Card sx={{ maxWidth: 345 }}>
+                        <CardHeader
+                            avatar={
+                            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                                {view_obj.nombre_funcionario.substring(0, 1)}
+                            </Avatar>
+                            }
+                            title={view_obj.nombre_funcionario}
+                            subheader={view_obj.fechadepago.substring(0, 9)}
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h6" component="div">
+                                No. Nomina:
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {view_obj.idnomina}
+                            </Typography>
+                            <Typography gutterBottom variant="h6" component="div">
+                                No. Funcionario:
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {view_obj.funcionario}
+                            </Typography>
+                            <Typography gutterBottom variant="h6" component="div">
+                                Departamento:
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {view_obj.depto_funcionario}
+                            </Typography>
+                            <Typography gutterBottom variant="h6" component="div">
+                                Total Devengado:
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {'$' + view_obj.totaldevengos}
+                            </Typography>
+                            <Typography gutterBottom variant="h6" component="div">
+                                Total Deducciones:
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                            {'$' + view_obj.totaldeducciones}
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 </Offcanvas.Body>
             </Offcanvas>
 
