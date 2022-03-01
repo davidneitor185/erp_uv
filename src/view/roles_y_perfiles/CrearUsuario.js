@@ -188,6 +188,7 @@ const CrearUsuario = () => {
                   <Form.Control
                     placeholder="..."
                     name="contra"
+                    type="password"
                     value={datos.contra}
                     onChange={onChange}
                   />
