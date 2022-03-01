@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+//import React, { useState } from "react";
 import Navbar from "../componentes/Navbar";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -99,7 +99,7 @@ const CuentasPorCobrar = () => {
                       )}
                       placement="bottom"
                     >
-                      <Link to={"..."}>
+                      <Link to={""}>
                       <FaWindowClose
                       onClick={() => Anular(cuentita.id_cuentaxc)}
                       disabled= {cuentita.estado_cxc === 'Anulada'}
