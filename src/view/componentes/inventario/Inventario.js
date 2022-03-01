@@ -3,14 +3,36 @@ import Navbar from "../Navbar";
 import { Form, Row, Col, FormControl, Button, Table  } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { url } from "../../../db/variabledb";
 class Inventario extends React.Component {
     constructor(props) {
         super(props);
         this.state = { data: [], isDataLoaded: false }
     }
-    state = {  }
-    render() { 
+    
+    cargarInventario() {
+      fetch(url + "inventario")
+        .then(respuesta => respuesta.json())
+        .then((datosRespuesta) => {
+          console.log(datosRespuesta)
+          this.setState({ isDataLoaded: true, data: datosRespuesta })
+        })
+        .catch(console.log)
+    }
+  
+    componentDidMount() {
+      this.cargarInventario();
+    }
+
+    
+
+    render() {
+      const { isDataLoaded, data } = this.state
+
+    if (!isDataLoaded) {
+
+      return (<div>Cargando...</div>);
+    } else {
         return (<>
 
             <Navbar />
@@ -57,7 +79,16 @@ class Inventario extends React.Component {
                           <th>Valor Unitario</th>
                           <th>Valor Total</th>
                         </tr>
-                       
+                        {data.map((dato, index) => {
+                          return (
+                            <tr key={index}>
+                              <td>{dato.nombreitem}</td>
+                              <td>{dato.cantidad}</td>
+                              <td>{dato.precio}</td>
+                              <td>{dato.precio * dato.cantidad}</td>
+                            </tr>
+                          );
+                        })}
                       </thead>
                     </Table>
                   </div>
@@ -65,7 +96,7 @@ class Inventario extends React.Component {
               </div>
              
             </div>
-          </>);
+          </>);}
     }
 }
  
