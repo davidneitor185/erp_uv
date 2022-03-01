@@ -24,7 +24,7 @@ const Navbar = () => {
         <Nav.Link href="/datosmaestros">Datos Maestros</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/rolesyperfiles">Roles & Perfiles</Nav.Link>
+        <Nav.Link href="/rolesperfiles">Roles & Perfiles</Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="/recursoshumanos">Recursos humanos</Nav.Link>

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+//import React, { useState } from "react";
 import Navbar from "../componentes/Navbar";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useAxios from "../../useAxios";
+import axios from "axios";
+import { notify } from "../componentes/notify/Notify";
+import { ToastContainer } from "react-toastify";
 import {
   TablePagination,
   TableRow,
@@ -22,6 +25,7 @@ const CuentasPorCobrar = () => {
     "Opciones",
   ];
 
+
   const formatDate = (date)=>{
     let formatted_date = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
      return formatted_date;
@@ -29,8 +33,20 @@ const CuentasPorCobrar = () => {
 
   const { data: cuentascobrar } = useAxios("/cuentasxcobrar");
   console.log(cuentascobrar);
+
+  const Anular = async (id) => {
+    const body = {estado_cxc:'Anulada', id_cuentaxc: id}
+    const guardado = await axios.put(`http://localhost:5000/actualizar_estado`, body);
+    if (guardado.status === 200) {
+      notify("Estado actualizado a Anulada", "", "info");
+    } else {
+      notify("Error al actualizar el estado");
+    }
+  }
+
   return (
     <>
+      <ToastContainer/> 
       <Navbar />
 
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
@@ -82,14 +98,18 @@ const CuentasPorCobrar = () => {
                         <Tooltip {...props}>Anular</Tooltip>
                       )}
                       placement="bottom"
-                    ><Link to={"..."}>
+                    >
+                      <Link to={""}>
                       <FaWindowClose
+                      onClick={() => Anular(cuentita.id_cuentaxc)}
+                      disabled= {cuentita.estado_cxc === 'Anulada'}
                         style={{
                           fontSize: 25,
                           color: "black",
                           marginRight: 10,
                         }}
-                      /></Link>
+                      />
+                      </Link>
                     </OverlayTrigger>
                     <OverlayTrigger
                     delay={{ hide: 450, show: 180 }}
