@@ -203,8 +203,10 @@ const CrearCuentasxPagar = () => {
 
 
     return (
+        <>
+        <Navbar />
         <div className="contePpal" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Navbar />
+            
             <ToastContainer />
             <div style={{ marginTop: 20 }}>
                 <h3>Registrar nueva cuenta</h3>
@@ -293,7 +295,7 @@ const CrearCuentasxPagar = () => {
                                 </span>
                             }
                         </Col>
-                        <Button type="button" variant="warning" size="lg" onClick = {() => agregarItem()}>Añadir a la tabla</Button>
+                        <Button type="button" style={{ backgroundColor: "#9B51E0", borderColor: "#9B51E0" }} size="lg" onClick = {() => agregarItem()}>Añadir a la tabla</Button>
                         <div style={{ display:"flex", justifyContent:"center", height: "290px" }}>
                             <TablaSI titulos={titulos} datos={list} tipo={tipo} />
                         </div>
@@ -307,7 +309,7 @@ const CrearCuentasxPagar = () => {
                         </Col>
                         <Col className="mb-2 p-2">
                             <div style={{ display:"flex", flexDirection:"row", justifyContent:"space-between", width:"250px", margin: "32px 45px 0"}}>
-                                <Button type="button" variant="warning" onClick = {() => guardar()} disabled={full} >Guardar</Button>
+                                <Button type="button" style={{ backgroundColor: "#9B51E0", borderColor: "#9B51E0" }} onClick = {() => guardar()} disabled={full} >Guardar</Button>
                                 <Link className="btn btn-secondary" to={"/cuentasporpagar"}>Regresar</Link>
                             </div>
                         </Col>
@@ -316,6 +318,7 @@ const CrearCuentasxPagar = () => {
                 
             </div>
         </div>
+        </>
     );
 };
 

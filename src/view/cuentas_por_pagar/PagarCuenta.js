@@ -9,6 +9,8 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { notify } from "../componentes/notify/Notify";
+import {MdOutlinePayments} from "react-icons/md";
+
 import "./ModuloCxP.css";
 
 const PagarCuenta = (datos) =>{
@@ -163,7 +165,7 @@ const PagarCuenta = (datos) =>{
               )}
               placement="bottom"
       ><Button className="me-2" variant="outline-dark" size="sm" onClick={() => setModal(true)}>
-        💲
+        <MdOutlinePayments />
        </Button></OverlayTrigger>
             <Modal
              show={show}
@@ -217,7 +219,7 @@ const PagarCuenta = (datos) =>{
                               </Form.Text>
                           </Col>
                           <Col style={{ marginLeft:"50px"}}>
-                            <Button variant="success" style={{ marginTop: "30px"}} onClick = {() => guardar()}>Realizar Pago</Button>
+                            <Button style={{ marginTop: "30px", backgroundColor: "#9B51E0", borderColor: "#9B51E0"}} onClick = {() => guardar()}>Realizar Pago</Button>
                             <Button variant="secondary" style={{ marginTop: "30px", marginLeft: "60px"}} onClick={() => setModal(false)}>Cancelar</Button>
                           </Col>
                         </Form.Group>

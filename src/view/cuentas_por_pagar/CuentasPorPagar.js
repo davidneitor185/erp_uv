@@ -3,7 +3,7 @@ import { TablaSI } from "../componentes/TablaSI";
 import { FormControl, Button, Form, Row, Col } from "react-bootstrap";
 import Navbar from "../componentes/Navbar";
 import { Link } from "react-router-dom";
-import { itemCargado } from "./validacionAxios";
+import {BiSearchAlt} from "react-icons/bi";
 
 class CuentasPorPagar extends React.Component {
     constructor(props) {
@@ -139,8 +139,10 @@ class CuentasPorPagar extends React.Component {
 
         if(item !== undefined){  
             return ( 
-                <div className="ppal-content" style={{ display: "flex", flexDirection: "column", alignItems:"center" }}>
+                <>
                 <Navbar/>
+                <div className="ppal-content" style={{ display: "flex", flexDirection: "column", alignItems:"center" }}>
+                
                 <div style={{ marginTop: 40 }}>
                     <h3>Cuentas Por Pagar</h3>
                 </div>
@@ -156,7 +158,7 @@ class CuentasPorPagar extends React.Component {
                                 />
                             </Col>
                             <Col sm="1" style={{ width: "5%", marginLeft: "3%", }}>
-                                <Button variant="secondary">🔍</Button>
+                                <Button variant="secondary"><BiSearchAlt/></Button>
                             </Col>
                             <Col sm="1">
                                { roluser === 5 && <Link className="btn btn-secondary" to={"/cuentasporpagar/crear"}>➕</Link>}
@@ -169,6 +171,7 @@ class CuentasPorPagar extends React.Component {
                     </Form>
                 </div>  
                 </div>
+                </>
              );
         }  
             
