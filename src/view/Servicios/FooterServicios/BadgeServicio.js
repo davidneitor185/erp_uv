@@ -24,8 +24,8 @@ const BadgeServicio = () => {
         <footer>
             <div style={{padding: 20, gap: 10}}>
                 <div style={{display: "flex",gap: 10}}>
-                    {list_badge.map((bg) => {
-                        return <Badge pill bg='primary' >
+                    {list_badge.map((bg, index) => {
+                        return <Badge pill bg='primary' key={index} >
                             <Link to={bg.link} style={{textDecoration: "none", color: "white"}}>
                                 {bg.title}
                             </Link>
