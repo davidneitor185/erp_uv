@@ -22,7 +22,7 @@ const PagarCuenta = (datos) =>{
       
         const rec = useAxios(`/recibos_pago/todos`);
         const recibos = rec.data;
-
+        
         const cuentaco = useAxios(`/datosmaestros_join_terceros`);
         const cntac = cuentaco.data;       
 
@@ -37,6 +37,7 @@ const PagarCuenta = (datos) =>{
               setRecibito(recibos[recibos.length-1].idrecibo + 1);
               setCuentac({cuentas:cntac[0].idcuentactle})
               console.log("cuenta_contable", cntac);
+              
             }
           }
         };

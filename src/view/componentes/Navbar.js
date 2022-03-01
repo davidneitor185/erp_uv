@@ -33,7 +33,7 @@ const Navbar = () => {
         <Nav.Link href="/inventario">Inventario</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Button>Logout</Button>
+        <Button href="/">Logout</Button>
       </Nav.Item>
     </Nav>
   </div>;
