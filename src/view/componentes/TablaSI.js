@@ -4,7 +4,7 @@ import { Button, Table } from "react-bootstrap";
 import Paginas from "./Paginas";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import ModalVerSoli from "../solicitudes/modalVerSolicitud";
+
 import VerDetalleCuentas from "../cuentas_por_pagar/VerDetalleCuentas";
 import PagarCuenta from "../cuentas_por_pagar/PagarCuenta";
 import AnularCuentas from "../cuentas_por_pagar/AnularCuentas";
@@ -55,10 +55,10 @@ export const TablaSI = ({titulos, datos, tipo}) => {
               if(tipo === "solicitudes"){
                 return (
                   <tr>
-                    {dato.map((datico, index) => {
-                      return <td key={index}>{datico}</td>;
-                    })}
-                    <td><ModalVerSoli/></td>
+                  <td>{dato.id_solicitud}</td>
+                  <td>{dato.nombre_funcionario}</td>
+                  <td>{dato.tiempo_e}</td>                  
+                  <td></td>
                   </tr>
                 );
               }else if(tipo === "cuentasxpagar"){
@@ -92,6 +92,28 @@ export const TablaSI = ({titulos, datos, tipo}) => {
                     { dato.length !== 0 && dato.map((datico, index) => {
                       return <td key={index}>{datico}</td>;
                     })}
+                  </tr>
+                );
+              }else if(tipo === "servicios"){
+                return (
+                  <tr>
+                    {dato.map((iterateDato, index) => {
+                      return <td key={index}>{iterateDato}</td>
+                    })}
+                    <td>
+                      <div className="btn-group" role="group" aria-label="">
+                        <button type="button" className="btn btn-warning">Editar</button>
+                        <button type="button" className="btn btn-danger">Borrar</button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              }else{
+                return (
+                  <tr>
+                    {dato.map((datico, index) => {
+                      return <td key={index}>{datico}</td>;
+                    })}                    
                   </tr>
                 );
               }

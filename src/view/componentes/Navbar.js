@@ -1,39 +1,42 @@
 import { buildQueries } from '@testing-library/react';
 import React from 'react';
-import { Button, Nav } from 'react-bootstrap';
+import { Button, Nav, NavLink } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+import "./Navbar.css";
 
 const Navbar = () => {
-  return <div style={{ display:"flex", flexDirection:"row" }}>
-    <Nav bg="light" justify variant="tabs" defaultActiveKey="/home" style={{ alignItems:"center" }}>
+  return <div style={{ paddingLeft: 25, paddingRight: 25, marginTop: 30 }}>
+    <Nav justify variant="tabs" defaultActiveKey="/home">
       <Nav.Item>
-        <Nav.Link href="/principal">Compras</Nav.Link>
+        <Link to={"/principal"} className='link' >Compras</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/cuentasporpagar">Cuentas Por Pagar</Nav.Link>
+        <Link to={"/cuentasporpagar"} className='link'>Cuentas Por Pagar</Link>
+      </Nav.Item>
+
+      <Nav.Item>
+        <Link to={"/cuentasporcobrar"} className='link'>Cuentas Por Cobrar</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/cuentasporcobrar">Cuentas Por Cobrar</Nav.Link>
+        <Link to={"/cuentascontables"} className='link'>Cuentas contables</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/cuentascontables">Cuentas contables</Nav.Link>
+        <Link to={"/servicios"} className='link'>Ordenes de Servicio</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/ordenesservicio">Ordenes de Servicio</Nav.Link>
+        <Link to={"/datosmaestros"} className='link'>Datos Maestros</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/datosmaestros">Datos Maestros</Nav.Link>
+        <Link to={"/rolesyperfiles"} className='link'>Roles & Perfiles</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/rolesyperfiles">Roles & Perfiles</Nav.Link>
+        <Link to={"/recursoshumanos"} className='link'>Recursos humanos</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/recursoshumanos">Recursos humanos</Nav.Link>
+        <Link to={"/inventario"} className='link'>Inventario</Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="/inventario">Inventario</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Button href="/">Logout</Button>
+      <Link to={"/"} className="btn btn-primary" >Logout</Link>
       </Nav.Item>
     </Nav>
   </div>;
