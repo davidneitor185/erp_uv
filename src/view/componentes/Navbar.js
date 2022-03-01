@@ -27,7 +27,7 @@ const Navbar = () => {
         <Link to={"/datosmaestros"} className='link'>Datos Maestros</Link>
       </Nav.Item>
       <Nav.Item>
-        <Link to={"/rolesyperfiles"} className='link'>Roles & Perfiles</Link>
+        <Nav.Link href="/rolesperfiles">Roles & Perfiles</Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Link to={"/recursoshumanos"} className='link'>Recursos humanos</Link>

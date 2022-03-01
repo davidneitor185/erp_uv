@@ -1,20 +1,29 @@
 import React from "react";
 import { Pagination } from "react-bootstrap";
 
-const Paginas = () => {
+const Paginas = ({count, page, onChange}) => {
+
+  const handelChange =(e, v) => {
+    onChange(parseInt(e.target.outerText) - 1)
+  }
+
+  const pages = () =>{
+    const paginas = []
+    for (var i = 0; i < count ; i++ ){
+      paginas.push(<Pagination.Item active={page === i} onClick={handelChange} value={i}>{ i + 1}</Pagination.Item>)
+    }
+    return paginas
+  }
+
+
   return (
-    <div style={{ display: "flex", justifyContent: "center", marginTop:40 }}>
+    <div style={{ display: "flex", justifyContent: "center"}}>
       <Pagination>
-        <Pagination.First />
-        <Pagination.Prev />
-        <Pagination.Item active>{1}</Pagination.Item>
-        {// .Item active resalta, .Item disabled no permite seleccionar
-        }
-        <Pagination.Item>{2}</Pagination.Item>
-        <Pagination.Item>{3}</Pagination.Item>
-        <Pagination.Ellipsis />
-        <Pagination.Next />
-        <Pagination.Last />
+        <Pagination.First disabled={page === 0}  onClick={() => onChange(0)}/>
+        <Pagination.Prev disabled={page === 0} onClick={() => onChange(page - 1)}/>
+        {pages()}
+        <Pagination.Next disabled={page === count-1} onClick={() => onChange(page + 1)}/>
+        <Pagination.Last disabled={page === count-1} onClick={() => onChange(count-1)} />
       </Pagination>
     </div>
   );

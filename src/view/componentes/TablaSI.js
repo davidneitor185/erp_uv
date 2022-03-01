@@ -10,8 +10,8 @@ import PagarCuenta from "../cuentas_por_pagar/PagarCuenta";
 import AnularCuentas from "../cuentas_por_pagar/AnularCuentas";
 import './Table/TablaSI.css';
 
+export const TablaSI = ({titulos, datos, tipo, children}) => {
 
-export const TablaSI = ({titulos, datos, tipo}) => {
   const roluser = JSON.parse(window.localStorage.getItem('user')).id_rol;
   return (
     <div
@@ -121,6 +121,7 @@ export const TablaSI = ({titulos, datos, tipo}) => {
             })}
           </tbody>
         </Table>
+        {children && children}
       </div>
       {tipo !== "cuentasxpagar" && tipo !== "cuentaxpdetalle" &&
         <Paginas />
