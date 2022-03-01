@@ -21,7 +21,7 @@ const ModalVerSoli = ({data_solicitud}) => {
     <>
       <Button variant="secondary" onClick={handleShow1}>
         <BiSearchAlt2 />
-      </Button>
+      </Button>{' '}
       <Button variant="secondary" onClick={handleShow2}>
         <BiFolderPlus />
       </Button>
