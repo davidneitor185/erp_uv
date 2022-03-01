@@ -8,6 +8,9 @@ import {
   TableCell,
 } from "../componentes/TablaPagination";
 import useAxios from "../../useAxios";
+import axios from "axios";
+import { notify } from "../componentes/notify/Notify";
+import { ToastContainer } from "react-toastify";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { FaUserTimes, FaUserEdit } from "react-icons/fa";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -25,8 +28,18 @@ const RolesPerfiles = () => {
   /**/
   const { data: usuarios } = useAxios("/usuarios");
 
+  const Denegar = async (id) => {
+    const guardado = await axios.put(`http://localhost:5000/modificar_acceso/${id}`);
+    if (guardado.status === 200) {
+      notify("Acceso actualizado a Denegado", "", "info");
+    } else {
+      notify("Error al actualizar el acceso");
+    }
+  }
+
   return (
     <>
+      <ToastContainer/>
       <Navbar />
 
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
@@ -72,17 +85,21 @@ const RolesPerfiles = () => {
                     <OverlayTrigger
                       delay={{ hide: 450, show: 180 }}
                       overlay={(props) => (
-                        <Tooltip {...props}>Eliminar</Tooltip>
+                        <Tooltip {...props}>Denegar acceso</Tooltip>
                       )}
                       placement="bottom"
                     >
+                      <Link to={""}>
                       <FaUserTimes
+                      onClick={() => Denegar(usuario.id_cuenta)}
+                      disabled= {usuario.acceso === 'Denegado'}
                         style={{
                           fontSize: 25,
                           color: "black",
                           marginRight: 10,
                         }}
                       />
+                      </Link>
                     </OverlayTrigger>
                     <OverlayTrigger
                     delay={{ hide: 450, show: 180 }}

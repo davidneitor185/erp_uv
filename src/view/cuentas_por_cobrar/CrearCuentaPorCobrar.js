@@ -4,6 +4,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import useAxios from "../../useAxios";
 import axios from "axios";
 import { notify } from "../componentes/notify/Notify";
+import { ToastContainer } from "react-toastify";
 import {
   TablePagination,
   TableRow,
@@ -116,6 +117,7 @@ function CrearCuentaPorCobrar() {
 
   return (
     <>
+      <ToastContainer/>
       <Navbar />
 
       <div style={{ display: "flex", justifyContent: "center", marginTop: 40 }}>
@@ -135,19 +137,23 @@ function CrearCuentaPorCobrar() {
               onChange={onChangeOrden}
               disabled={id_cuentaxc}
             >
-              
-              <option value={0}>...</option>
-              {ordenesServicio.map((ordenS) => {
-                return (
-                  <option
-                    value={ordenS.idordenservicio}
-                    key={ordenS.idordenservicio}
-                  >
-                    {ordenS.idordenservicio}
-                  </option>
-                );
-              })}
-              
+              {id_cuentaxc ? (
+                <option>{datos.id_orden_servicio}</option>
+              ) :(  
+              <>            
+                <option value={0}>...</option>
+                {ordenesServicio.map((ordenS) => {
+                  return (
+                    <option
+                      value={ordenS.idordenservicio}
+                      key={ordenS.idordenservicio}
+                    >
+                      {ordenS.idordenservicio}
+                    </option>
+                  );
+                })}
+                </>  
+              )}
             </Form.Select>
           </Col>
           <Col sm="2">
