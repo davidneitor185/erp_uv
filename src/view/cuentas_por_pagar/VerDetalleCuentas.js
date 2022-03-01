@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Button, Form, Row, Col } from "react-bootstrap";
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import {GrView} from "react-icons/gr";
 import useAxios from "../../useAxios";
 
 const VerDetalleCuentas = (info) =>{
@@ -55,7 +56,7 @@ const VerDetalleCuentas = (info) =>{
                     )}
                     placement="bottom"
       ><Button className="me-2" variant="outline-dark" size="sm" onClick={() => setModal(true)}>
-                🔍
+                <GrView />
               </Button></OverlayTrigger>
             <Modal
             show={show}

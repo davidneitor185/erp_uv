@@ -16,6 +16,16 @@ const DatosMaestros = () =>{
         dias: ""
     });
 
+    const [datosm, setDatosm] = useState({
+        pagot:0,
+        idp: 0,
+        recp: 0,
+        idr:0,
+        pagon: 0,
+        idpa:0,
+        dias: ""
+    });
+
     const [errores, setErrores] = useState({
         pagot: false,
         recp: false,
@@ -33,6 +43,39 @@ const DatosMaestros = () =>{
     const cc = useAxios(`/cuenta_contable/todos`);
     const cntac = cc.data;
 
+    const datm = useAxios("/datosmaestros");
+    const dt = datm.data;
+
+    
+
+    /*cntac.map((element) =>{
+        if(element.idcuentactle === dt.pagot){
+            setDatosm({
+                ...datosm,
+                pagot: element.entidadbancaria,
+                idp: element.numerocuenta
+            })
+        }
+        if(element.idcuentactle === dt.recepcionp){
+            setDatosm({
+                ...datosm,
+                recepcionp: element.entidadbancaria,
+                idr: element.numerocuenta
+            })
+        }
+        if(element.idcuentactle === dt.pagon){
+            setDatosm({
+                ...datosm,
+                pagon: element.entidadbancaria,
+                idpa: element.numerocuenta
+            })
+        }
+        setDatosm({
+            ...datosm,
+            dias: dt.vencimiento
+        })
+    })*/
+    console.log(dt)
     const putDm = async() =>{
         const url = "http://localhost:5000";
         const body = {
@@ -112,11 +155,13 @@ const DatosMaestros = () =>{
     };
 
     return(
+        <>
+        <Navbar/> 
         <div style={{ 
         display: "flex",
         flexDirection:"column",
         alignItems:"center"}}>
-           <Navbar/> 
+           
         <div style={{
             display: "flex",
             flexDirection:"column",
@@ -135,7 +180,12 @@ const DatosMaestros = () =>{
                       <Col style={{ padding:"1%"}}>
                       <Form.Label>Pagos a terceros</Form.Label>
                         <Form.Select name="pagot" onChange={handleInputChange} disabled={roluser !== 10 && true}>
-                        <option value={0}>Cuentas</option>
+                                    {dt.length !== 0 && cntac.length !== 0 && cntac.map((elemento) => {
+                                        {
+                                            elemento.idcuentactle === dt[0].pagot &&
+                                            <option value={0}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
+                                        }
+                                    })}
                             {cntac.length !== 0 && cntac.map((elemento) => (
                                 <option key={elemento.idcuentactle} value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
                                 
@@ -149,7 +199,13 @@ const DatosMaestros = () =>{
                       <Col style={{ padding:"1%"}}>
                       <Form.Label>Recepción de pagos</Form.Label>
                         <Form.Select name="recp" onChange={handleInputChange} disabled={roluser !== 10 && true}>
-                        <option value={0}>Cuentas</option>
+                        {dt.length !== 0 && cntac.length !== 0 && cntac.map((elemento) => {
+                                        {
+                                            elemento.idcuentactle === dt[0].recp ?
+                                            <option value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>:
+                                            <option value={0}>Cuentas</option>
+                                        }
+                                    })}
                             {cntac.length !== 0 && cntac.map((elemento) => (
                                 <option key={elemento.idcuentactle} value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
                                 
@@ -163,7 +219,11 @@ const DatosMaestros = () =>{
                       <Col style={{ padding:"1%"}}>
                       <Form.Label>Pagos de nomina</Form.Label>
                         <Form.Select name="pagon" onChange={handleInputChange} disabled={roluser !== 10 && true}>
-                        <option value={0}>Cuentas</option>
+                        {dt.length !== 0 && cntac.length !== 0 && cntac.map((elemento) => (
+                                dt.map((ele) =>(
+                                    elemento.idcuentactle === ele.pagon && <option key={elemento.idcuentactle} value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
+                                ))
+                                    ))}
                             {cntac.length !== 0 && cntac.map((elemento) => (
                                 <option key={elemento.idcuentactle} value={elemento.idcuentactle}>{elemento.entidadbancaria + " : " + elemento.numerocuenta}</option>
                                 
@@ -176,7 +236,7 @@ const DatosMaestros = () =>{
                       </Col>
                       <Col style={{ padding:"1%"}}>
                           <Form.Label>Vencimiento cuentas por cobrar</Form.Label>
-                          <Form.Control name="dias" onChange={handleInputChange} disabled={roluser !== 10 && true}/>
+                          <Form.Control name="dias" value={dt.length !== 0 && dt[0].vencimiento} onChange={handleInputChange} disabled={roluser !== 10 && true}/>
                           <Form.Text className="text-muted">
                             En días
                           </Form.Text>
@@ -202,6 +262,7 @@ const DatosMaestros = () =>{
                         </Form.Group>
               </Form>
           </div>
+        </>
     );
 };
 export default DatosMaestros;

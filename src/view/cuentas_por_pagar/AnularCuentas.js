@@ -7,6 +7,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { notify } from "../componentes/notify/Notify";
+import {AiFillDelete} from "react-icons/ai";
 
 const AnularCuentas = (elemen) =>{
         const [show, setShow] = useState(false);
@@ -48,7 +49,7 @@ const AnularCuentas = (elemen) =>{
                     )}
                     placement="bottom"
       ><Button className="me-2" variant="outline-dark" size="sm" onClick={() => setModal(true)}>
-                ✖
+                <AiFillDelete />
               </Button></OverlayTrigger>
             <Modal 
             show={show}
@@ -70,7 +71,7 @@ const AnularCuentas = (elemen) =>{
                 <ToastContainer />
                         <Form.Group as={Row} className="mb-3" controlId="primera_linea" >
                         <Col style={{ display:"flex" , justifyContent: "space-around"}}>
-                            <Button variant="danger" onClick = {() => anular()}>Anular</Button>
+                            <Button  style={{ backgroundColor: "#9B51E0", borderColor: "#9B51E0" }} onClick = {() => anular()}>Anular</Button>
                             <Button variant="secondary" onClick={() => setModal(false)}>Cancelar</Button>
                           </Col>
                         </Form.Group>
