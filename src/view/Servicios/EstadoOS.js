@@ -9,12 +9,50 @@ import { FormControl, Button, Form, Row, Col, Modal, ModalBody, ModalFooter, Tab
 
 const EstadoOS = () => {
     
+    const [idEmpleado, setIdEmpleado] = useState(2);
     const [dato, setData] = useState([]);
+    const [id, setId] = useState(null);
+    const [estado, setEstado] = useState("");
+    const [comentario, setComentario] = useState("");
+    const [viewComment, setViewComment] = useState(true);
+
     const getData = async () => {
-         await axios.get("http://localhost:5000/ordenesServicio").then((res) => {
+         /*await axios.get("http://localhost:5000/ordenesServicio").then((res) => {
+            setData(res.data);
+            console.log(res.data);
+        });*/ // Sirve pero necesito solo las ordenes donde aparece cada empleado
+        await axios.get(`http://localhost:5000/osEmpleado/${idEmpleado}`).then((res) => {
             setData(res.data);
             console.log(res.data);
         });
+    };
+
+    const EditEstado = async (obj) => {
+        try {
+            await axios.put("http://localhost:5000/editStateOS", obj).then((res) => {
+                getData();
+                console.log("Metio ese malpartido.....");
+                setId(null);
+                setEstado("");
+                setComentario("");
+            });
+        }catch(error) {
+            console.log("No, No se pudo asi F");
+        };
+    };
+
+    const formEditEstado = () => {
+        const body = {
+            idOrdenServicio: id,
+            estado: estado,
+            comentario: comentario,
+        };
+
+        if(estado != "") {
+            EditEstado(body);
+        }
+        else
+            console.log("Falta el estado");
     };
 
     useEffect(() => {
@@ -24,9 +62,7 @@ const EstadoOS = () => {
     //************************************************************************ */
 
     //***************** */
-    const [viewModalDelete, setModalDelete] = useState(false);
     const [viewModalEdit, setModalEdit] = useState(false);
-    const [viewModalAdd, setModalAdd] = useState(false);
     const [selectOrden, setSelectOrden] = useState(null);
     /****************** */
 
@@ -41,10 +77,6 @@ const EstadoOS = () => {
             getData();
         });
     }
-
-    //Quitar estos :
-    const handleAddFormSubmit = () => {};
-    const handleAddFormChange = () => {};
 
 
     const columns = useMemo(
@@ -73,9 +105,7 @@ const EstadoOS = () => {
             Header: 'Opciones',
             Cell: ({cell}) => (
                 <div className="btn-group" role="group" aria-label="">
-                    <button type="button" onClick={() => setModalEdit(true)} className="btn btn-outline-warning"><BiEditAlt /></button>
-                    <button onClick={() => {selectOS(cell.row.values.idordenservicio); setModalDelete(true)}} className="btn btn-outline-danger"><AiFillDelete /></button>
-                    <button type="button" onClick={() => setModalAdd(true)} className="btn btn-outline-success"><AiFillFileAdd /></button>
+                    <button type="button" onClick={() => {setId(cell.row.values.idordenservicio);setModalEdit(true)}} className="btn btn-outline-warning"><BiEditAlt /></button>
                 </div>
             )
           },
@@ -100,7 +130,7 @@ const EstadoOS = () => {
         setPageSize,
         state: { pageIndex, pageSize },
       } = useTable({ 
-          columns, data: dato, initialState: { pageIndex: 0, pageSize: 2 }
+          columns, data: dato, initialState: { pageIndex: 0, pageSize: 5 }
         }, usePagination); 
 
     return (
@@ -173,8 +203,8 @@ const EstadoOS = () => {
                             <div style={{ display: "flex", justifyContent: "center", marginTop: 40, width: "100%", height: "100%", alignItems: "end"}}>
                                 <Pagination>
                                     <Pagination.First onClick={() => gotoPage(0)} disabled={!canPreviousPage}/>
-                                    <Pagination.Prev onClick={() => previousPage()} disable={!canPreviousPage}/>
-                                    <Pagination.Next onClick={() => gotoPage(pageIndex + 1)} disable={!canNextPage}/>
+                                    <Pagination.Prev onClick={() => previousPage()} disabled={!canPreviousPage}/>
+                                    <Pagination.Next onClick={() => gotoPage(pageIndex + 1)} disabled={!canNextPage}/>
                                     <Pagination.Last onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}/>
                                 </Pagination>
                             </div>
@@ -183,76 +213,50 @@ const EstadoOS = () => {
                 </div>
                 <BadgeServicio/>
 
-                {/* Modal de Eliminar Orden de Servicio */}
-                <Modal show={viewModalDelete} onHide={() => setModalDelete(false)}>
-                    <Modal.Header style={{backgroundColor: "crimson"}}>
-                        <Modal.Title>Eliminar Orden de Servicio</Modal.Title>
-                    </Modal.Header>
-                    <ModalBody>
-                        ¿Estás seguro que deseas eliminar la orden {selectOrden} y todos sus registros asociados?
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className="btn btn-danger" onClick={() => {deleteOrdenServicio(selectOrden); setModalDelete(false)}}>Sí</button>
-                        <button className="btn btn-secundary" onClick={()=>setModalDelete(false)}>No</button>
-                    </ModalFooter>
-                </Modal>
 
-                {/* Modal de Editar Ordenes de Servicio */}
+                {/* Modal de Editar Estado */}
                 <Modal size="lg" show={viewModalEdit} onHide={() => setModalEdit(false)} aria-labelledby="example-modal-sizes-title-lg">
                     <Modal.Header closeButton style={{backgroundColor: "dodgerblue"}}>
                         <Modal.Title id="example-modal-sizes-title-lg">
-                            Editar Orden de Servicio
+                            Editar Estado de mis Ordenes de Servicio asignadas
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body style={{backgroundColor: "aliceblue"}}>
                         <div style={{display: "flex", flexDirection: "column", 
                                 alignItems: "center", justifyContent: "center", paddingTop: "5%", width: "100%"}}>
-                            <Form onSubmit={handleAddFormSubmit} style={{width: "50%"}}>
-                                <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formBasicEmail">
-                                        <Form.Label>Asignar Empleado</Form.Label>
-                                        <Form.Select aria-label="Default select example">
-                                            <option>Funcionario</option>
-                                            <option value="1">Func 1</option>
-                                            <option value="2">Func 2</option>
-                                        </Form.Select>
-                                    </Form.Group>
-
-                                    <Form.Group as={Col} controlId="formBasicPassword">
-                                        <Form.Label>Estado</Form.Label>
-                                        <Form.Select aria-label="Default select example">
-                                            <option>Select Estado</option>
-                                            <option value="1">Asignado</option>
-                                            <option value="2">En tramite</option>
-                                        </Form.Select>
-                                    </Form.Group>
-                                </Row>
-
-                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label>Comentarios</Form.Label>
-                                    <Form.Control name="phoneNumber" as="textarea"  onChange={handleAddFormChange}/>
+                            <Form style={{width: "50%"}}>
+                                {['radio'].map((type) => (
+                                    <div style={{display: "flex", flexDirection: "column"}} key={`inline-${type}`} className="mb-3">
+                                    <Form.Check
+                                        inline
+                                        label="Asignada"
+                                        name="group1"
+                                        type={type}
+                                        id={`inline-${type}-1`}
+                                        onClick={() => {setEstado("Asignada");setViewComment(true)}}
+                                    />
+                                    <Form.Check
+                                        inline
+                                        label="Cerrada"
+                                        name="group1"
+                                        type={type}
+                                        id={`inline-${type}-2`}
+                                        onClick={() => {setEstado("Cerrada");setViewComment(true)}}
+                                    />
+                                    <Form.Check
+                                        inline
+                                        label="Cancelada"
+                                        name="group1"
+                                        type={type}
+                                        id={`inline-${type}-3`}
+                                        onClick={() => {setEstado("Cancelada");setViewComment(false)}}
+                                    />
+                                    </div>
+                                ))}
+                                <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" >
+                                    <Form.Label>Comentarios de Cierre</Form.Label>
+                                    <Form.Control name="phoneNumber" as="textarea" disabled={viewComment} onChange={(e) => setComentario(e.target.value)}/>
                                 </Form.Group>
-
-                                <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formBasicPassword">
-                                        <Form.Label>Costo Total</Form.Label>
-                                        <Form.Control name="email" type="text" placeholder="$0000,00" onChange={handleAddFormChange}/>
-                                    </Form.Group>
-
-                                    <Form.Group as={Col} controlId="formBasicPassword">
-                                        <Form.Label>Cliente</Form.Label>
-                                        <Form.Select aria-label="Default select example">
-                                            <option>Select ID</option>
-                                            {/*data.map((data_id, index) => {
-                                                return(
-                                                    <option value={index} key={index}>
-                                                        {data_id.id}
-                                                    </option>
-                                                )
-                                            })*/}
-                                        </Form.Select>
-                                    </Form.Group>
-                                </Row>
                             </Form>
                         </div>
                     </Modal.Body>
@@ -260,44 +264,8 @@ const EstadoOS = () => {
                         <Button variant="secondary" onClick={() => setModalEdit(false)}>
                             Cerrar
                         </Button>
-                        <Button variant="primary" onClick={() => setModalDelete(false)}>
+                        <Button variant="primary" onClick={() => {formEditEstado();setModalEdit(false)}}>
                             Guardar Cambios
-                        </Button>
-                    </Modal.Footer>
-                </Modal>
-
-                {/* Modal de Agregar Servicios a ordenes */}
-                <Modal show={viewModalAdd} onHide={() => setModalAdd(false)}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Agregar Items en la Orden</Modal.Title>
-                    </Modal.Header>
-
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Password" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Check me out" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Submit
-                            </Button>
-                        </Form>
-                    </Modal.Body>
-
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={() => setModalAdd(false)}>
-                            Close
-                        </Button>
-                        <Button variant="primary" onClick={() => setModalAdd(false)}>
-                            Save Changes
                         </Button>
                     </Modal.Footer>
                 </Modal>

@@ -25,6 +25,8 @@ import RolesPerfiles from "./roles_y_perfiles/RolesPerfiles";
 import RolesPerfiles_rol from "./roles_y_perfiles/RolesPerfiles_rol";
 import CrearUsuario from "./roles_y_perfiles/CrearUsuario";
 import CrearRol from "./roles_y_perfiles/CrearRol";
+import { Contrataciones } from "./Rrhh/Contratacion/Contrataciones";
+
 
 
 function Rutas() {
@@ -61,6 +63,7 @@ function Rutas() {
             <Route path="/rolesperfiles/modificar/:id_funcionario" element={<CrearUsuario />}/>
             <Route path="/rolesperfiles/rol/crear" element={<CrearRol />}/>
             
+            <Route path="/contrataciones" element={<Contrataciones />} />
           </Routes>
         </Router>
       </UserState>

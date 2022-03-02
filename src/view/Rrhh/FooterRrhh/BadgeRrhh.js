@@ -12,6 +12,10 @@ const BadgeServicio = () => {
             "title": 'Crear Nomina',
             "link": '/crear_nomina',
         },
+        {
+            "title": "Contrataciones",
+            "link": '/contrataciones'
+        }
         //This title is provivional
     ];
 
