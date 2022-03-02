@@ -95,8 +95,8 @@ class Solicitudes extends React.Component {
                               <td>{dato.nombre_funcionario}</td>
                               <td>{fecha[0]}</td>
                               <td>{dato.estado}</td>
-                              <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link>{' '}
-                              <Link className="btn btn-secondary" to={"/crearoc/"+dato.id_solicitud}>➕Orden</Link>
+                              <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link>{' '}                             
+                              
                               </td>
                             </tr>
                           );
@@ -109,13 +109,13 @@ class Solicitudes extends React.Component {
                               <td>{dato.nombre_funcionario}</td>
                               <td>{fecha[0]}</td>
                               <td>{dato.estado}</td>
-                              <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link>
-                              <Link className="btn btn-secondary" to={"/crearoc/"+dato.id_solicitud}>➕Orden</Link></td>
+                              <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link></td>
                               
                             </tr>
                           );
                         }
-                      }else{
+                      }else if(this.roluser==4){
+                        if(dato.estado=="Aprobada Gerente Gral."){
                         return (
                           <tr key={index}>
                             <td>{dato.id_solicitud}</td>
@@ -123,7 +123,20 @@ class Solicitudes extends React.Component {
                             <td>{fecha[0]}</td>
                             <td>{dato.estado}</td>
                             <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link>
-                            <Link className="btn btn-secondary" to={"/crearoc/"+dato.id_solicitud}>➕Orden</Link></td>
+                            <Link className="btn btn-secondary" to={"/crearoc/"+dato.id_solicitud}>➕Orden</Link>
+                            </td>
+                            
+                          </tr>
+                        );}
+                      }else{
+                        return (
+                          <tr key={index}>
+                            <td>{dato.id_solicitud}</td>
+                            <td>{dato.nombre_funcionario}</td>
+                            <td>{fecha[0]}</td>
+                            <td>{dato.estado}</td>
+                            <td><Link className="btn btn-secondary" to={"/principal/versolicitud/"+dato.id_solicitud}>🔍</Link></td>
+                            
                             
                           </tr>
                         );

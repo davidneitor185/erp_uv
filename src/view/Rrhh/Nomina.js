@@ -161,15 +161,14 @@ export const Nomina = () => {
                     </Form.Group>
                 </Form>
             </div>
-            <div style={{ justifyContent: "center", margin: "0 70px" }}>
+            <div style={{ display: "flex", justifyContent: "center", margin: "0 70px" }}>
                 <div
                     style={{
-                        margin: "5%",
+                        margin: "2% 5% 5% 5%",
                         padding: "5%",
                         border: "0.5px solid black",
                         borderRadius: "45px",
-                        width: "1050px",
-                        height: "500px"
+                        
                     }}
                     >
                     <div style={{borderRadius:4, width: "100%", height: "100%", display: "flex", flexDirection: "column"}}>

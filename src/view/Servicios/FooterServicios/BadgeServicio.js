@@ -3,7 +3,7 @@ import { BiNoEntry } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
 const BadgeServicio = () => {
-
+    const roluser = JSON.parse(window.localStorage.getItem('user')).id_rol;
     const list_badge = [
         {
             "title": 'Listar Ordenes Servicio',
@@ -26,9 +26,10 @@ const BadgeServicio = () => {
                 <div style={{display: "flex",gap: 10}}>
                     {list_badge.map((bg) => {
                         return <Badge pill bg='primary' >
-                            <Link to={bg.link} style={{textDecoration: "none", color: "white"}}>
+                            {roluser!=8 && bg.title =='Crear Orden de servicio'? <></>: <Link to={bg.link} style={{textDecoration: "none", color: "white"}}>
                                 {bg.title}
-                            </Link>
+                            </Link> }
+                            
                         </Badge>;
                     })}
                 </div>

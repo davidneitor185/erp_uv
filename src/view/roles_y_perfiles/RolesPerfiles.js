@@ -26,6 +26,8 @@ const RolesPerfiles = () => {
     "Opciones",
   ];
   /**/
+
+  const roluser = JSON.parse(window.localStorage.getItem('user')).id_rol;
   const { data: usuarios } = useAxios("/usuarios");
 
   const Denegar = async (id) => {
@@ -36,7 +38,7 @@ const RolesPerfiles = () => {
       notify("Error al actualizar el acceso");
     }
   }
-
+  
   return (
     <>
       <ToastContainer/>
@@ -59,9 +61,10 @@ const RolesPerfiles = () => {
               <Button variant="secondary">🔍</Button>
             </Col>
             <Col sm="2" style={{ width: "5%", display: "flex" }}>
-              <Link className="btn btn-secondary" to={`/rolesperfiles/crear`}>
+              {roluser==10? <Link className="btn btn-secondary" to={`/rolesperfiles/crear`}>
                 <BsFillPersonPlusFill style={{ fontSize: 25 }} />
-              </Link>
+              </Link>:<></> }
+              
             </Col>
           </Form.Group>
         </Form>
@@ -89,7 +92,7 @@ const RolesPerfiles = () => {
                       )}
                       placement="bottom"
                     >
-                      <Link to={""}>
+                      {roluser==10? <Link to={""}>
                       <FaUserTimes
                       onClick={() => Denegar(usuario.id_cuenta)}
                       disabled= {usuario.acceso === 'Denegado'}
@@ -99,7 +102,7 @@ const RolesPerfiles = () => {
                           marginRight: 10,
                         }}
                       />
-                      </Link>
+                      </Link> : <></>}
                     </OverlayTrigger>
                     <OverlayTrigger
                     delay={{ hide: 450, show: 180 }}
@@ -108,9 +111,10 @@ const RolesPerfiles = () => {
                     )}
                     placement="bottom"
                     >
-                    <Link to={`/rolesperfiles/modificar/${usuario.id_funcionario}`}>
+                      {roluser==10? <Link to={`/rolesperfiles/modificar/${usuario.id_funcionario}`}>
                       <FaUserEdit style={{ fontSize: 25, color: "black" }} />
-                    </Link>
+                    </Link>:<></>}
+                    
                     </OverlayTrigger>
                   </TableCell>
                 </TableRow>

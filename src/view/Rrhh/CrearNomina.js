@@ -43,13 +43,13 @@ export const CrearNomina = () => {
           <div style={{ display: "flex", justifyContent: "center", marginTop: 40, marginBottom: 20}}>
               <h3>Crear Nominas</h3>
           </div>
-            <div style={{ justifyContent: "center", margin: "0 70px" }}>
+            <div style={{ display: "flex", justifyContent: "center", margin: "0 70px", height: "90%", width:"100%"}}>
               <div
                 style={{ display: "flex",
                   flexDirection: "row",
-                  alignItems: "flex-start",
+                  justifyContent: "center",
                   padding: "16px 30px 30px",
-                  position: "absolute",
+                  margin: "auto",
                   width: "1100px",
                   height: "598px",
                   left: "90px",
@@ -59,7 +59,7 @@ export const CrearNomina = () => {
                   borderRadius: "20px"}}>
                       {/*<div style={{flex: "1", border: "1px solid gray", marginRight: "20px", 
                       backgroundColor: "Gainsboro", width: "100%", height: "100%"}}></div>*/}
-                      <div style={{position: "absolut", width: "510px", height: "529px", left: "20px", position: "absolute", padding: "20px",
+                      <div style={{width: "510px", height: "529px", left: "20px",  padding: "20px",
                                   top: "20px", background: "rgba(241, 241, 242, 0.81)", boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)", borderRadius: "16px"}}>
                         <Form>
                           <Row className='mb-3'>
@@ -112,7 +112,7 @@ export const CrearNomina = () => {
                           <Button type="button" onClick={() => console.log(date)}>Submit</Button>
                         </Form>
                       </div>
-                      <div style={{position: "absolut", width: "530px", height: "529px", left: "550px", position: "absolute", padding: "20px",
+                      <div style={{width: "530px", height: "529px", left: "550px", padding: "20px",
                                   top: "20px", background: "rgba(241, 241, 242, 0.81)", boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)", borderRadius: "16px"}}>
                         <Form>
                           <Row className='mb-3'>
