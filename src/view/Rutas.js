@@ -11,6 +11,7 @@ import { CrearServicios } from "./Servicios/CrearServicios";
 import { TablaBarata } from "./Servicios/TablaBarata";
 import { Nomina } from "./Rrhh/Nomina";
 import { CrearNomina } from "./Rrhh/CrearNomina";
+import { Contrataciones } from "./Rrhh/Contratacion/Contrataciones";
 
 
 
@@ -31,6 +32,7 @@ function Rutas() {
             <Route path="/MisOrdenesServicio" element={<EstadoOS />}/>
             <Route path="/recursoshumanos" element={<Nomina />} />
             <Route path="/crear_nomina" element={<CrearNomina />} />
+            <Route path="/contrataciones" element={<Contrataciones />} />
           </Routes>
         </Router>
       </UserState>

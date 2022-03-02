@@ -6,6 +6,8 @@ import {AiFillDelete, AiFillFileAdd} from "react-icons/ai";
 import Navbar from '../componentes/Navbar';
 import BadgeServicio from './FooterServicios/BadgeServicio';
 import { FormControl, Button, Form, Row, Col, Modal, ModalBody, ModalFooter, Table, Pagination } from "react-bootstrap";
+import { ToastContainer } from "react-toastify";
+import { NotifyToasty } from './Toasty/NotifyToasty';
 
 const Servicios = () => {
     
@@ -55,6 +57,7 @@ const Servicios = () => {
     const editOS = async (obj) => {
         try {
             await axios.put("http://localhost:5000/editOS", obj).then(res => {
+                NotifyToasty("Se ha editado con exito");
                 getData();
                 console.log(res.data);
                 console.log("Se pudo cambiar la orden X]");
@@ -204,6 +207,7 @@ const Servicios = () => {
 
     return (
         <>
+            <ToastContainer />
             <Navbar />
             <div>
                 <div style={{ display: "flex", justifyContent: "center", marginTop: 40, marginBottom: 20}}>
