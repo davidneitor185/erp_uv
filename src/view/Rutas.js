@@ -27,11 +27,23 @@ import CrearUsuario from "./roles_y_perfiles/CrearUsuario";
 import CrearRol from "./roles_y_perfiles/CrearRol";
 import { Contrataciones } from "./Rrhh/Contratacion/Contrataciones";
 
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql
+} from "@apollo/client";
 
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/',
+  cache: new InMemoryCache()
+});
 
 function Rutas() {
   return (
     <div className="App">
+      <ApolloProvider client={client}>
       <UserState>
         <Router>
           <Routes>
@@ -67,6 +79,7 @@ function Rutas() {
           </Routes>
         </Router>
       </UserState>
+      </ApolloProvider>
     </div>
   );
 };

@@ -4,7 +4,17 @@ import BadgeInfe from "../componentes/badgeinfe_compras/BadgeInfe";
 import { Link } from "react-router-dom";
 import Navbar from "../componentes/Navbar";
 import { url } from "../../db/variabledb";
+import { useQuery, gql } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+} from "@apollo/client";
 
+  const client = new ApolloClient({
+    uri: 'http://localhost:4000/',
+    cache: new InMemoryCache()
+  });
 
 
 class Solicitudes extends React.Component {
@@ -14,6 +24,7 @@ class Solicitudes extends React.Component {
   }
   roluser = JSON.parse(window.localStorage.getItem('user')).id_rol
 
+  
   cargarSolicitudes() {
     fetch(url + "solicitudes")
       .then(respuesta => respuesta.json())
@@ -25,7 +36,31 @@ class Solicitudes extends React.Component {
   }
 
   componentDidMount() {
-    this.cargarSolicitudes();
+    //this.cargarSolicitudes();
+    client.query({
+      query: gql`
+      query Solicitudes {
+        solicitudes {
+          id_funcionario
+          id_solicitud
+          justificacion
+          tiempo_e
+          estado
+          jefe_inmediato
+          email
+          nombre_funcionario
+          identificacion
+          tel
+          depto_funcionario
+        }
+      }
+      `
+    })
+    .then(result => {
+      console.log(result)
+      this.setState({ isDataLoaded: true, data: result.data.solicitudes })
+    });
+
   }
 
   render() {
